@@ -22,7 +22,7 @@ body{
 .box h2{
 	margin: 0 0 30px;
 	padding: 0;
-	color: #fff;
+	color: #f7ce04;
 	text-align: center;
 }
 
@@ -71,6 +71,15 @@ body{
 	padding: 10px 20px;
 	cursor: pointer;
 	border-radius: 5px;
+}
+
+.box p{
+	color: #f7ce04;
+}
+
+.box p a{
+	text-decoration: none;
+	color: #0423ed;
 }
 
 
