@@ -24,6 +24,8 @@ body{
 	padding: 0;
 	color: #f7ce04;
 	text-align: center;
+	font-family: roboto;
+	letter-spacing: 2px;
 }
 
 .box .inputBox{
@@ -41,6 +43,7 @@ body{
 	border-bottom: 1px solid #fff;
 	outline: none;
 	background: transparent;
+	font-family: roboto;
 }
 
 .box .inputBox label{
@@ -51,7 +54,8 @@ body{
 	font-size: 16px;
 	color: #fff;
 	pointer-events: none;
-	transition: .5%;	
+	transition: .5%;
+	font-family: roboto;
 }
 
 .box .inputBox input:focus ~label,
@@ -60,6 +64,17 @@ body{
 	left: 0;
 	color: #03a9f4;
 	font: -size: 12px;	
+}
+
+.box input[type="checkbox"]{
+	color: red;
+	margin-bottom: 15px;
+	margin-right: 15px;
+}
+
+.box span{
+	color: white;
+	font-family: roboto
 }
 
 .box input[type="submit"]{
@@ -71,15 +86,18 @@ body{
 	padding: 10px 20px;
 	cursor: pointer;
 	border-radius: 5px;
+	font-family: roboto;
 }
 
 .box p{
 	color: #f7ce04;
+	font-family: roboto;
 }
 
 .box p a{
 	text-decoration: none;
 	color: #0423ed;
+	font-family: roboto;
 }
 
 
