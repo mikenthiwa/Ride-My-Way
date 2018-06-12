@@ -11,14 +11,24 @@ body{
 
 .logo li{
 	color: blue;
-	font-family: roboto;
+	font-family: 'Russo One', sans-serif;
 	letter-spacing: 1px;
-	font-size: 20px;
+	font-size: 25px;
+	font-weight: 700;
 }
 
 ul{
 	float: right;
 	list-style-type: none;
+}
+
+ul input{
+	padding: 3px;
+	border-radius: 3px;
+	border: 1px solid grey;
+	
+	
+	
 }
 
 ul li{
@@ -32,7 +42,7 @@ ul li a{
 	padding: 5px 20px;
 	border: 1px solid transparent;
 	transition: 0.6s ease;
-	font-weight: 400;
+	font-weight: 500;
 	font-family: roboto;
 	
 }
@@ -67,6 +77,11 @@ ul li.active a{
 	color: #ffffff;
 	font-family: roboto;
 	letter-spacing: 1px;
+}
+
+.center .title_description{
+	color: yellow;
+	font-weight: 100;
 }
 
 .intro-divider {
@@ -190,22 +205,20 @@ table td{
 	border: none;
 	outline: none;
 	color: #fff;
-	background: #03a9f4;
+	background: green;
 	width: 100%;
 	padding: 10px 10px;
 	cursor: pointer;
 	border-radius: 5px;
 	font-family: roboto;
 	font-size: 20px;
+	box-shadow: 0 15px 25px rgba(0,0,0,.5);
 	
 }
 
-
 footer {
   padding-left: 10px;
-	padding-top: 50px; 
-	
-    
+	padding-top: 50px;   
 }
 
 footer li{	
@@ -216,6 +229,7 @@ footer li{
 footer li a{
 	text-decoration: none;
 	font-family: roboto;
+	font-weight: 700;
 }
 
 footer p.copyright {
