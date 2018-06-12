@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d2e82cc9-1d53-4641-85b9-f3a315d87113" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/UI/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/driver_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/UI/driver_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/home_user.html" beforeDir="false" afterPath="$PROJECT_DIR$/UI/home_user.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/UI/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/UI/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/myRides.html" beforeDir="false" afterPath="$PROJECT_DIR$/UI/myRides.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/UI/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/ride.html" beforeDir="false" afterPath="$PROJECT_DIR$/UI/ride.html" afterDir="false" />
-    </list>
+    <list default="true" id="d2e82cc9-1d53-4641-85b9-f3a315d87113" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,6 +53,11 @@
               <item name="Ride-My-Way" type="b2602c69:ProjectViewProjectNode" />
               <item name="Ride-My-Way" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Ride-My-Way" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Ride-My-Way" type="462c0819:PsiDirectoryNode" />
+              <item name="UI" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -102,7 +96,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11309524" />
       <window_info anchor="bottom" id="TODO" order="6" />
