@@ -1,0 +1,248 @@
+body{
+	padding: 0;
+	margin: 0;
+	background-color: #fff8b2;
+}
+.logo{
+	float: left;
+	height: auto;
+	font-weight: 5s0;
+}
+
+.logo li{
+	color: blue;
+	font-family: 'Russo One', sans-serif;
+	letter-spacing: 1px;
+	font-size: 25px;
+	font-weight: 700;
+}
+
+ul{
+	float: right;
+	list-style-type: none;
+}
+
+ul input{
+	padding: 3px;
+	border-radius: 3px;
+	border: 1px solid grey;
+	
+	
+	
+}
+
+ul li{
+	display: inline-block;
+}
+
+ul li a{
+	text-decoration: none;
+	color: blue;
+	border-radius: 10px;
+	padding: 5px 20px;
+	border: 1px solid transparent;
+	transition: 0.6s ease;
+	font-weight: 500;
+	font-family: roboto;
+	
+}
+
+ul li a:hover{
+	background-color: yellow;
+	color: #000;
+}
+
+ul li.active a{
+	background-color: #fff;
+	color: #000;
+}
+
+.main{
+	max-width: 1200px;
+	margin: auto;
+}
+
+.clear{
+	clear: both;
+}
+
+.center h2{
+	color: #f2e318;
+	font-size: 30px;
+	font-family: roboto;
+	letter-spacing: 2px
+}
+
+.center p{
+	color: #ffffff;
+	font-family: roboto;
+	letter-spacing: 1px;
+}
+
+.center .title_description{
+	color: yellow;
+	font-weight: 100;
+}
+
+.intro-divider {
+    width: 400px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.container{
+	padding: 0;
+	margin: 0;
+	background-image: url(images/index1.jpg);
+	background-size: cover;
+	background-size: 100% 100%;
+	padding-top: 50px;
+  padding-bottom: 150px;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    margin-top: 10px;
+		text-align: center;
+}
+
+.center h1{
+	text-align: center;
+}
+
+
+table{
+	text-align: center;
+	font-family: roboto;
+	box-sizing: border-box;
+	letter-spacing: 1px;
+
+	
+}
+
+table th{
+	color: yellow;
+	font-weight: 100;
+}
+
+table tr{
+	box-shadow: 0 15px 25px rgba(0,0,0,.5);
+}
+
+table tbody tr:hover{
+	background-color: rgba(0,0,0,.5);
+}
+
+
+table td{
+	color: white;
+	
+}
+
+table tbody .metadata{
+	display: none;
+}
+
+.ridetable td{
+	padding: 0 2px;
+	padding: 8px;
+
+}
+
+
+.ridetable a{
+	color: white;
+	text-decoration: none;
+
+}
+.ridetable a:hover{
+	color: #f2e318;
+	text-decoration: underline;
+}
+
+
+
+.profiletable{
+	width: 600px;
+}
+
+.center button{
+	text-align: center;
+	padding: 15px 40px;
+	margin: 10px;
+	background-color: green;
+	border: none;
+	border-radius: 10px;
+	font-size: 16px;
+	font-family: roboto;
+	letter-spacing: 1px;
+	color: white;
+	cursor: pointer;
+	box-shadow: 0 15px 25px rgba(0,0,0,.5);
+	outline: none;
+	
+}
+
+
+
+
+
+/* css for ride.html */
+
+.center .inputBox {
+	position: relative;
+}
+
+
+.center .inputBox input{
+	width: 100%;
+	padding: 10px 10px;
+	font-size: 16px;
+	color: #fff;
+	letter-spacing: 1px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	outline: none;
+	font-family: roboto;
+}
+
+.center input[type="submit"]{
+	background: transparent;
+	border: none;
+	outline: none;
+	color: #fff;
+	background: green;
+	width: 100%;
+	padding: 10px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	font-family: roboto;
+	font-size: 20px;
+	box-shadow: 0 15px 25px rgba(0,0,0,.5);
+	
+}
+
+footer {
+  padding-left: 10px;
+	padding-top: 50px;   
+}
+
+footer li{	
+	list-style-type: none;
+	padding: 20px;
+}
+
+footer li a{
+	text-decoration: none;
+	font-family: roboto;
+	font-weight: 700;
+}
+
+footer p.copyright {
+	text-align: center;
+	font-family: roboto;
+}
+
+
+

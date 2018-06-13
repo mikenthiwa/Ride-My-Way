@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+		<link rel="stylesheet" href="style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+</head>
+<body>
+	
+	
+	<div class="box" >
+		
+		<form action="Login_Form.html">
+			<h2>Sign Up Passanger</h2>
+			<div class="inputBox">
+				<input type="text" name="" required="">
+				<label>username</label>
+			</div>
+			<div class="inputBox">
+				<input type="text" name="" required="">
+				<label>email</label>
+			</div>
+			<div class="inputBox">
+				<input type="password" name="" required="">
+				<label>password</label>
+			</div>
+			<div class="inputBox">
+				<input type="password" name="" required="">
+				<label>confirm password</label>
+			</div>
+			<input type="submit" name="" value="Register">
+			<p>Already have an account ? <a href="login_form.html">Login</a></p>
+			<p class="message">Register as<a href="#"> Driver</a></p>
+			<p><a href="index.html"> Back Home >></a></p>
+		</form>
+		 
+		
+		<form action="dashboard.html" class="driverform">
+			<h2>Sign Up Driver</h2>
+			<div class="inputBox">
+				<input type="text" name="", required="">
+				<label>username</label>
+			</div>
+			<div class="inputBox">
+				<input type="email" name="", required="">
+				<label>email</label>
+			</div>
+			<div class="inputBox">
+				<input type="text" name="", required="">
+				<label>Registration Plate</label>
+			</div>
+			<div class="inputBox">
+				<input type="password" name="", required="">
+				<label>password</label>
+			</div>
+			<div class="inputBox">
+				<input type="password" name="", required="">
+				<label>confirm password</label>
+			</div>
+			<input type="submit" name="", value="Register">
+			<p>Already have an account ? <a href="login_form.html">Login</a></p>
+			<p class="message">Register as<a href="#"> Passanger</a></p>
+			<p><a href="index.html"> Back Home >></a></p>
+
+		</form>
+	</div>
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	
+	<script>
+	$('.message a').click(function(){
+		$('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+	})
+	
+	</script>
+
+	
+
+</body>
+</html>

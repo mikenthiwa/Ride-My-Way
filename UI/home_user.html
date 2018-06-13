@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+		<link rel="stylesheet" href="index.css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+
+
+</head>
+<body>
+	<header>
+			<div class="main">
+				<div class="logo">
+					<ul>
+						<li>Ride-My-Way</li>
+					</ul>
+				</div>
+					<ul>
+						<input type="text" placeholder="rides...">
+						<li class="active"><a href="home_user.html">Rides</a></li>
+						<li><a href="profile.html">Profile</a></li>
+						<li><a href="login_form.html">Logout</a></li>
+					</ul>
+			</div>
+	</header>
+	
+	<div class="clear"></div>
+	<div class="container">
+		<div class="center">
+			<h2>Rides available</h2>
+			<table class="ridetable">
+				<thead>
+					
+             <th width="10%"> Id </th>
+             <th width="40%"> Routes </th>
+             <th width="40%"> Driver </th>
+             <th width="20%"> Time </th>
+           
+					</thead>
+				<tbody>
+					<tr class="breakrow">
+						<td>1</td>
+						<td>Syokimau - Nairobi</td>
+					</tr>
+						<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Micheal Mutua</a></td>
+						<td>7:00am</td>
+						<td class="call">Call</a></td>
+						<td>Cancel</td>
+						</tr>
+						<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Collins Injera</a></td>
+						<td>7:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>	
+						
+					</tr>
+				</tbody>
+				
+				<tbody>
+					<tr class="breakrow">
+						<td>2</td>
+						<td>Nairobi - Westlands</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Ted Kavoo</a></td>
+						<td>8:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
+					<tr class="metadata">
+						<td></td>
+						<td></td>
+						<td><a href="#">Chris Martin</a></td>
+						<td>8:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
+					
+				</tbody>
+				
+				<tbody>
+					<tr class="breakrow">
+						<td>3</td>
+						<td>Thika - All Soaps</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Rick Ross</a></td>
+						<td>8:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Quade Cooper</a></td>
+						<td>8:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr class="breakrow">
+						<td>4</td>
+						<td>Nakuru - Westlands</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td>Joe Mfalme</td>
+						<td>1:00am</td>
+						<td>Call</td>
+						<td>Cancel</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td>Rob Willims</td>
+						<td>1:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr class="breakrow">
+						<td><a href="#">5</a></td>
+						<td><a href="#">Langata - Nairobi West</a></td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Regina Ndoti</a></td>
+						<td><a href="#">3:00am</a></td>
+						<td class="call"><a href="#">Call</a></td>
+						<td>Cancel</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Chris Kirubi</a></td>
+						<td><a href="#">3:00am</a></td>
+						<td class="call"><a href="#">Call</a></td>
+						<td>Cancel</td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+	</div>
+	
+	<footer>
+		<li><a href="login_form.html">Logout</a></li>
+		<p class="copyright text-muted small">Copyright © 2018. All Rights Reserved</p>
+	</footer> 
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+	$(document).ready(function() {
+		
+		//collapse and expand sections
+		$('.breakrow').click(function(){
+			
+			$(this).nextUntil('tr.breakrow').animate({height: "toggle", opacity: "toggle"}, "slow");
+		})
+	})
+		
+	$(document).ready(function() {
+		$('.check').click(function(){
+				$(this).nextUntil('tr.call').css("color", "green" );
+						
+		})
+})
+</script>
+
+</body>
+</html>
