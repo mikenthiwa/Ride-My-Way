@@ -130,9 +130,18 @@ table tr{
 	box-shadow: 0 15px 25px rgba(0,0,0,.5);
 }
 
+table tbody tr:hover{
+	background-color: rgba(0,0,0,.5);
+}
+
+
 table td{
 	color: white;
 	
+}
+
+table tbody .metadata{
+	display: none;
 }
 
 .ridetable td{
@@ -140,6 +149,7 @@ table td{
 	padding: 8px;
 
 }
+
 
 .ridetable a{
 	color: white;
@@ -151,9 +161,6 @@ table td{
 	text-decoration: underline;
 }
 
-.ridetable a:active{
-	color: green;
-}
 
 
 .profiletable{

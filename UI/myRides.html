@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<link rel="stylesheet" href="index.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
@@ -37,33 +38,34 @@
              <th width="20%"> Time </th>
 						<th width="10%"></th>
            </tr>
-				<tbody>
+				<tbody class="row">
+					
 					<td>1</td>
 					<td>Syokimau-Nairobi</td>
 					<td>Micheal Mutua</td>
 					<td>7:00am</td>
-					<td><a href="#">Accept</a><br><a href="#">Reject</a></td>
+					<td><a class="accept" href="#">Accept</a><br><a class="reject" href="#">Reject</a></td>
 				</tbody>
 				<tbody>
 					<td>2</td>
 					<td>Westlands - Langata</td>
 					<td>Micheal Mutua</td>
 					<td>10:00am</td>
-					<td><a href="#">Accept</a><br><a href="#">Reject</a></td>
+					<td><a class="accept" href="#">Accept</a><br><a class="reject" href="#">Reject</a></td>
 				</tbody>
 				<tbody>
 					<td>3</td>
 					<td>Nairobi - Komarock</td>
 					<td>Micheal Mutua</td>
 					<td>12:00am</td>
-					<td><a href="#">Accept</a><br><a href="#">Reject</a></td>
+					<td><a class="accept" href="#">Accept</a><br><a class="reject" href="#">Reject</a></td>
 				</tbody>
 				<tbody>
 					<td>4</td>
 					<td>Lavington - Yaya Center</td>
 					<td>Micheal Mutua</td>
 					<td>2:00pm</td>
-					<td><a href="#"></a><a href="#">Accept</a><br><a href="#">Reject</a></td>
+					<td><a class="accept" href="#">Accept</a><br><a class="reject" href="#">Reject</a></td>
 				</tbody>
 			</table>
 			<form action="ride.html">
@@ -75,7 +77,20 @@
 	<footer>
 		<li><a href="login_form.html">Logout</a></li>
 		<p class="copyright text-muted small">Copyright © 2018. All Rights Reserved</p>
-	</footer>       
+	</footer>
+	
+	
+	<script type="text/javascript">
+		
+	
+		$(".accept").active(function(){
+				//$(this).nextUntil('td.accept').css("color", "red" );
+			$("td.accept").css("color": "red");
+		})
+	
+		
+		
+	</script>
 
 </body>
 </html>

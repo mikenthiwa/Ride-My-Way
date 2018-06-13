@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 		<link rel="stylesheet" href="index.css">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -22,7 +23,7 @@
 						<input type="text" placeholder="rides...">
 						<li class="active"><a href="home_user.html">Rides</a></li>
 						<li><a href="profile.html">Profile</a></li>
-						<li><a href="Login_Form.html">Logout</a></li>
+						<li><a href="login_form.html">Logout</a></li>
 					</ul>
 			</div>
 	</header>
@@ -32,47 +33,127 @@
 		<div class="center">
 			<h2>Rides available</h2>
 			<table class="ridetable">
-					<tr>
+				<thead>
+					
              <th width="10%"> Id </th>
              <th width="40%"> Routes </th>
-             <th width="35%"> Driver </th>
+             <th width="40%"> Driver </th>
              <th width="20%"> Time </th>
-           </tr>
+           
+					</thead>
 				<tbody>
+					<tr class="breakrow">
+						<td>1</td>
+						<td>Syokimau - Nairobi</td>
+					</tr>
+						<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Micheal Mutua</a></td>
+						<td>7:00am</td>
+						<td class="call">Call</a></td>
+						<td>Cancel</td>
+						</tr>
+						<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Collins Injera</a></td>
+						<td>7:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>	
+						
+					</tr>
+				</tbody>
+				
+				<tbody>
+					<tr class="breakrow">
+						<td>2</td>
+						<td>Nairobi - Westlands</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Ted Kavoo</a></td>
+						<td>8:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
+					<tr class="metadata">
+						<td></td>
+						<td></td>
+						<td><a href="#">Chris Martin</a></td>
+						<td>8:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
 					
-					<td><a href="#">1</a></td>
-					<td><a href="#">Syokimau - Nairobi</a></td>
-					<td><a href="#">Micheal Mutua</a></td>
-					<td><a href="#">7:00am</a></td>
-					<td><a href="#">Call</a></td>
+				</tbody>
+				
+				<tbody>
+					<tr class="breakrow">
+						<td>3</td>
+						<td>Thika - All Soaps</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Rick Ross</a></td>
+						<td>8:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Quade Cooper</a></td>
+						<td>8:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
 				</tbody>
 				<tbody>
-					<td><a href="#">2</a></td>
-					<td><a href="#">Nairobi - Westlands</a></td>
-					<td><a href="#">Ted Kavoo</a></td>
-					<td><a href="#">8:00am</a></td>
-					<td><a href="#">Call</a></td>
+					<tr class="breakrow">
+						<td>4</td>
+						<td>Nakuru - Westlands</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td>Joe Mfalme</td>
+						<td>1:00am</td>
+						<td>Call</td>
+						<td>Cancel</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td>Rob Willims</td>
+						<td>1:00am</td>
+						<td class="call">Call</td>
+						<td>Cancel</td>
+					</tr>
 				</tbody>
 				<tbody>
-					<td><a href="#">3</a></td>
-					<td><a href="#">Thika - All Soaps</a></td>
-					<td><a href="#">Chris Darling</a></td>
-					<td><a href="#">8:00am</a></td>
-					<td><a href="#">Call</a></td>
-				</tbody>
-				<tbody>
-					<td><a href="#">4</a></td>
-					<td><a href="#">Nakuru - Westlands</a></td>
-					<td><a href="#">Joe Mfalme</a></td>
-					<td><a href="#">1:00am</a></td>
-					<td><a href="#">Call</a></td>
-				</tbody>
-				<tbody>
-					<td><a href="#">5</a></td>
-					<td><a href="#">Langata - Nairobi West</a></td>
-					<td><a href="#">Regina Ndoti</a></td>
-					<td><a href="#">3:00am</a></td>
-					<td><a href="#">Call</a></td>
+					<tr class="breakrow">
+						<td><a href="#">5</a></td>
+						<td><a href="#">Langata - Nairobi West</a></td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Regina Ndoti</a></td>
+						<td><a href="#">3:00am</a></td>
+						<td class="call"><a href="#">Call</a></td>
+						<td>Cancel</td>
+					</tr>
+					<tr class="metadata">
+						<td class="check"></td>
+						<td></td>
+						<td><a href="#">Chris Kirubi</a></td>
+						<td><a href="#">3:00am</a></td>
+						<td class="call"><a href="#">Call</a></td>
+						<td>Cancel</td>
+					</tr>
 				</tbody>
 			</table>	
 		</div>
@@ -81,7 +162,26 @@
 	<footer>
 		<li><a href="login_form.html">Logout</a></li>
 		<p class="copyright text-muted small">Copyright © 2018. All Rights Reserved</p>
-	</footer>       
+	</footer> 
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+	$(document).ready(function() {
+		
+		//collapse and expand sections
+		$('.breakrow').click(function(){
+			
+			$(this).nextUntil('tr.breakrow').animate({height: "toggle", opacity: "toggle"}, "slow");
+		})
+	})
+		
+	$(document).ready(function() {
+		$('.check').click(function(){
+				$(this).nextUntil('tr.call').css("color", "green" );
+						
+		})
+})
+</script>
 
 </body>
 </html>

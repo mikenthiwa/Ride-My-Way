@@ -11,7 +11,7 @@ body{
 .box{
 	position: absolute;
 	top: 50%;
-	left: 30%;
+	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 400px;
 	padding: 40px;
@@ -22,20 +22,10 @@ body{
 	float: left;
 }
 
-.box2{
-	float: left;
-	position: absolute;
-	top: 50%;
-	left: 70%;
-	transform: translate(-50%, -50%);
-	width: 400px;
-	padding: 40px;
-	background: rgba(0,0,0,.8);
-	box-sizing: border-box;
-	box-shadow: 0 15px 25px rgba(0,0,0,.5);
-	border-radius: 10px; 
-	float: left;
+.box .driverform{
+	display: none;
 }
+
 
 .box h2{
 	margin: 0 0 30px;
@@ -116,6 +106,16 @@ body{
 	text-decoration: none;
 	color: #0423ed;
 	font-family: roboto;
+	font-style: italic;
+	color: #03a9f4;
+	letter-spacing: 1px;
+}
+
+.box .message a{
+	
+	letter-spacing: 1px;
+	font-size: 20px;
+	
 }
 
 
