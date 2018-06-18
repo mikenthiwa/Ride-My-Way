@@ -1,8 +1,6 @@
 import unittest
 import sys  # fix import errors
 import os
-from werkzeug.security import generate_password_hash
-import json
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app import create_app
 from app.models import Rides, Users
