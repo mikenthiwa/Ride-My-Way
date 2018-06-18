@@ -36,6 +36,14 @@ class RidesEndpoint(ConfigTestCase):
         res = self.client().post('/api/v1/rides', data=json.dumps(ride), content_type='application/json')
         self.assertIn("Route is not provided Missing required parameter in the JSON body", str(res.data))
 
+    def test_modify_route(self):
+        """Test API can modify route"""
+        route = {"route": "Nakuru - Naivashs"}
+        response = self.client().put('/api/v1/rides/1', data=json.dumps(route),
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Route has been successfully modified", str(response.data))
+
 
 
 if __name__ == '__main__':
