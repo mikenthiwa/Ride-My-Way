@@ -20,7 +20,6 @@ class RideList(Resource):
         return response
 
     @api.expect(ride_model)
-    @api.doc(security='apikey')
     def post(self):
 
         """Add a ride endpoint"""
