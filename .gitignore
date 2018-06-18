@@ -1,3 +1,7 @@
 venv/*
 instance/*
 env.bat
+.idea/
+app/__pycache__/
+resources/__pycache__/
+tests/__pycache__/
