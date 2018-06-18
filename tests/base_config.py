@@ -17,6 +17,7 @@ class ConfigTestCase(unittest.TestCase):
         user = Users()
 
         ride.add_ride("Syokimau - Nairobi", "Regina", "12:00")
+        ride.add_ride("Nairobi - Limuru", "Regina", "12:00")
         user.add_users("test_user@gmail.com", "test_user", "123456789")
         user.add_users("test_driver@gmail.com", "test_driver", "123456789", driver=True)
         user.add_users("admin@admin.com", "admin", "123456789", admin=True)

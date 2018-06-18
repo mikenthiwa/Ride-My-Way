@@ -11,8 +11,8 @@ users = {}
 class Users:
     """Contains all methods for class users"""
 
-    def get_all_user(self):
-        return users
+    # def get_all_user(self):
+    #     return users
 
     def add_users(self, email, username, password, driver=False, admin=False):
         hashed_password = generate_password_hash(password=password, method='sha256')
