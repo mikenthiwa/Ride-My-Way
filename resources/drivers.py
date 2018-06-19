@@ -34,15 +34,16 @@ class ModifyRide(Resource):
     parser.add_argument("time", type=str, required=False, location=['json'])
 
     def get(self, ride_id):
-
         """Get a ride """
+
         res = rides.get_ride(ride_id=ride_id)
         return res
 
-    """Modifying ride detail"""
 
     @api.expect(ride_model)
     def put(self, ride_id):
+        """Modifying ride detail"""
+
         args = self.parser.parse_args()
         route = args['route']
         driver = args['driver']
