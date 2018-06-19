@@ -7,6 +7,8 @@ import os
 
 rides = {}
 users = {}
+request = {}
+
 
 class Users:
     """Contains all methods for class users"""
@@ -47,8 +49,20 @@ def invalid_ride_id():
 class Rides:
     """Contains methods for class ride"""
 
-    def get_rides(self):
-        return rides
+    @staticmethod
+    def get_rides():
+        output = []
+        for ride_id in rides:
+            data = {}
+            data["ride_id"] = ride_id
+            data["route"] = rides[ride_id]["Route"]
+            data["driver"] = rides[ride_id]["Driver"]
+            data["time"] = rides[ride_id]["Time"]
+            data["request"] = rides[ride_id]["request"]
+            output.append(data)
+        return output
+
+
 
     def get_ride(self, ride_id):
         if ride_id not in rides:
@@ -58,7 +72,7 @@ class Rides:
         return ride
 
     @staticmethod
-    def add_ride(route, driver, time, request=False, accept=False):
+    def add_ride(route, driver, time, request="Request to join this ride", accept=False):
         new_id = len(rides) + 1
         rides[new_id] = {"Route": route,
                          "Driver": driver,
@@ -69,7 +83,9 @@ class Rides:
 
     def request_ride(self, ride_id):
         ride = rides.get(ride_id)
-        ride["request"] = True
+        ride["request"] = "You have requested to join this ride"
+        request[ride_id] = {"Route": rides[ride_id]["Route"]}
+        print(request)
         return {"msg": "You have successfully requested a ride"}
 
     def accept_ride_taken(self, ride_id):
