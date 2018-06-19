@@ -49,11 +49,11 @@ Application used for testing endpoint.
    GET        |   api/v1/rides                  | Get all Rides 
    GET        |  api/vi/rides/{rideId}          | Get a specific ride                   
    POST       |  api/v1/driver/rides            | Add a ride                  
-   POST       |  api/v1/rides/<rideId>/Request  | Request to join a ride                     
-|
-|
-|
-|
-|
+   POST       |  api/v1/rides/{rideId}/Request  | Request to join a ride                     
+
+
+
+
+
     
  

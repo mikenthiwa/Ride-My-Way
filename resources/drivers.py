@@ -60,6 +60,12 @@ class ModifyRide(Resource):
             res = rides.modify_time(ride_id=ride_id, time=time)
             return res
 
+    def patch(self, ride_id):
+        """Change the state of accept, of ride taken"""
+
+        res = rides.accept_ride_taken(ride_id=ride_id)
+        return res
+
     def delete(self, ride_id):
         res = rides.delete_ride(ride_id=ride_id)
         return res

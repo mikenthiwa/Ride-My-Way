@@ -52,12 +52,25 @@ class Rides:
         return ride
 
     @staticmethod
-    def add_ride(route, driver, time):
+    def add_ride(route, driver, time, request=False, accept=False):
         new_id = len(rides) + 1
         rides[new_id] = {"Route": route,
                          "Driver": driver,
-                         "Time": time}
+                         "Time": time,
+                         "request": request,
+                         "accept": accept}
         return {"msg": "Ride has been successfully added"}
+
+    def request_ride(self, ride_id):
+        ride = rides.get(ride_id)
+        ride["request"] = True
+        return {"msg": "You have successfully requested a ride"}
+
+    def accept_ride_taken(self, ride_id):
+        ride = rides.get(ride_id)
+        ride["accept"] = True
+        return {"msg": "You have confirmed ride taken"}
+
 
     @staticmethod
     def modify_driver(ride_id, driver):

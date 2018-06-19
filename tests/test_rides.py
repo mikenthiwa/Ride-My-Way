@@ -21,6 +21,13 @@ class RidesEndpoint(ConfigTestCase):
         self.assertEqual(res.status_code, 200)
         self.assertIn("Syokimau - Nairobi", str(res.data))
 
+    def test_request_ride(self):
+        """Test API can request a ride"""
+
+        res = self.client().patch('/api/v1/rides/1/request')
+        self.assertIn("You have successfully requested a ride", str(res.data))
+        self.assertEqual(res.status_code, 200)
+
 
 if __name__ == '__main__':
     unittest.main()

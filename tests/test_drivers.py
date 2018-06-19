@@ -30,6 +30,13 @@ class DriversEndpoint(ConfigTestCase):
         res = self.client().post('/api/v1/driver/rides', data=json.dumps(ride), content_type='application/json')
         self.assertIn("Route is not provided Missing required parameter in the JSON body", str(res.data))
 
+    def test_accept_ride(self):
+        """Test API driver can accept ride"""
+
+        res = self.client().patch('/api/v1/driver/rides/1')
+        self.assertIn("You have confirmed ride taken", str(res.data))
+        self.assertEqual(res.status_code, 200)
+
     def test_modify_route(self):
         """Test API can modify route"""
         route = {"route": "Nakuru - Naivasha"}

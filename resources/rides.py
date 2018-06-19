@@ -24,7 +24,17 @@ class Ride(Resource):
         response = rides.get_ride(ride_id=ride_id)
         return response
 
+class RequestRide(Resource):
+    """Contain PATCH method"""
+
+    def patch(self, ride_id):
+        """Post a ride"""
+
+        res = rides.request_ride(ride_id=ride_id)
+        return res
+
 
 api.add_resource(RideList, '/rides', endpoint='ridelist')
 api.add_resource(Ride, '/rides/<int:ride_id>')
+api.add_resource(RequestRide, '/rides/<int:ride_id>/request')
 
