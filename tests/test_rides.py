@@ -21,6 +21,17 @@ class RidesEndpoint(ConfigTestCase):
         self.assertEqual(res.status_code, 200)
         self.assertIn("Syokimau - Nairobi", str(res.data))
 
+    def test_get_invalid_ride(self):
+        """Test API for invalid ride"""
+
+        res = self.client().get('/api/v1/rides/11')
+        self.assertIn("invalid ride_id", str(res.data))
+
+        res_del = self.client().delete('/api/v1/driver/rides/12')
+        self.assertIn("invalid ride_id", str(res_del.data))
+
+
+
     def test_request_ride(self):
         """Test API can request a ride"""
 

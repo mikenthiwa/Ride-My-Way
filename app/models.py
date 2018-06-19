@@ -41,6 +41,9 @@ class Users:
             return {"msg": 'invalid email'}, 401
 
 
+def invalid_ride_id():
+    return {"msg": "invalid ride_id"}
+
 class Rides:
     """Contains methods for class ride"""
 
@@ -48,6 +51,9 @@ class Rides:
         return rides
 
     def get_ride(self, ride_id):
+        if ride_id not in rides:
+            return invalid_ride_id()
+
         ride = rides[ride_id]
         return ride
 
@@ -92,7 +98,8 @@ class Rides:
 
     @staticmethod
     def delete_ride(ride_id):
+        if ride_id not in rides:
+            return invalid_ride_id()
+
         del rides[ride_id]
         return {"msg": "Ride has been successfully deleted"}
-
-
