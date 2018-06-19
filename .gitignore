@@ -1,5 +1,4 @@
 venv/*
-instance/*
 env.bat
 .idea/
 app/__pycache__/
