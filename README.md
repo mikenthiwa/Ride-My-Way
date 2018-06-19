@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/mikenthiwa/Ride-My-Way.svg?branch=apiv1)](https://travis-ci.org/mikenthiwa/Ride-My-Way)
+[![Coverage Status](https://coveralls.io/repos/github/mikenthiwa/Ride-My-Way/badge.svg?branch=apiv1)](https://coveralls.io/github/mikenthiwa/Ride-My-Way?branch=apiv1)
+[![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Ride-My-Way
 
 Ride-my App(apiv1) is a carpooling api that provides drivers with the ability to create ride offers and passengers  to join available ride offers.
@@ -42,14 +46,20 @@ Some of the third party modules that will be installed are:
 * Pytest - Python module for running test.
 
 ### Postman
-Application used for testing endpoint.
+Application used for testing endpoint. <br>
+Endpoint available for this api are shown in the table below:
 
-|Requests     |   EndPoint                      | Functionality
-|:-----------:|:-------------------------------:|:--------------:
-   GET        |   api/v1/rides                  | Get all Rides 
-   GET        |  api/vi/rides/{rideId}          | Get a specific ride                   
-   POST       |  api/v1/driver/rides            | Add a ride                  
-   POST       |  api/v1/rides/{rideId}/Request  | Request to join a ride                     
+|Requests     |   EndPoint                          | Functionality
+|:-----------:|:-----------------------------------:|:--------------:
+   GET        |  api/v1/rides                       | Get all Rides 
+   GET        |  api/vi/rides/{rideId}              | Get a specific ride
+   DELETE     |  api/v1/driver/rideId               | Delete ride          
+   POST       |  api/v1/driver/rides                | Add a ride                  
+   PATCH      |  api/v1/rides/{rideId}/Request      | Request to join a ride
+   PATCH      |  api/v1/driver/rides/rideId/Accept  | Accept the request passengers request
+   PUT        |  api/vi/driver/rides/rideId         | Modify ride details
+   POST       |  api/v1/register                    | Register users
+   POST       |  api/v1/login                       | Login user                       
 
 
 
