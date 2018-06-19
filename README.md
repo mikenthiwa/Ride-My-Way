@@ -61,6 +61,12 @@ Endpoint available for this api are shown in the table below:
    POST       |  api/v1/register                    | Register users
    POST       |  api/v1/login                       | Login user                       
 
+## Running test
+
+Running test can be done by using unittest, pytest.
+To run test you can either run the following commands in cmd:
+* coverage run -m unittest
+* pytest
 
 
 
