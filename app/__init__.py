@@ -37,4 +37,7 @@ def create_app(config_name):
     from resources.drivers import api as driver
     api.add_namespace(driver, path='/api/v1')
 
+    from resources.admin import api as admin
+    api.add_namespace(admin, path='/api/v1')
+
     return app

@@ -13,8 +13,8 @@ request = {}
 class Users:
     """Contains all methods for class users"""
 
-    # def get_all_user(self):
-    #     return users
+    def get_all_user(self):
+        return users
 
     def add_users(self, email, username, password, driver=False, admin=False):
         hashed_password = generate_password_hash(password=password, method='sha256')
@@ -85,7 +85,6 @@ class Rides:
         ride = rides.get(ride_id)
         ride["request"] = "You have requested to join this ride"
         request[ride_id] = {"Route": rides[ride_id]["Route"]}
-        print(request)
         return {"msg": "You have successfully requested a ride"}
 
     def accept_ride_taken(self, ride_id):

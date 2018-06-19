@@ -40,21 +40,24 @@ class DriversEndpoint(ConfigTestCase):
     def test_modify_route(self):
         """Test API can modify route"""
         route = {"route": "Nakuru - Naivasha"}
-        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(route), content_type='application/json')
+        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(route),
+                                     content_type='application/json', headers=self.driver_header)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Route has been successfully modified", str(response.data))
 
     def test_modify_ride_driver(self):
         """Test API can modify driver's name"""
         driver = {"driver": "Francis Ole Kaparo"}
-        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(driver), content_type='application/json')
+        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(driver),
+                                     content_type='application/json', headers=self.driver_header)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Driver has been successfully modified", str(response.data))
 
     def test_modify_ride_time(self):
         """Test API can modify route"""
         time = {"time": "10:00"}
-        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(time), content_type='application/json')
+        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(time),
+                                     content_type='application/json', headers=self.driver_header)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Ride time has been successfully modified", str(response.data))
 

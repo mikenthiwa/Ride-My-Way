@@ -1,5 +1,6 @@
 from flask_restplus import Resource, Namespace
 from app.models import Rides
+from resources.auth import token_required
 
 rides = Rides()
 
@@ -17,7 +18,7 @@ class RideList(Resource):
 
 class Ride(Resource):
     """Contains GET method"""
-
+    @token_required
     def get(self, ride_id):
         """Get a ride"""
 

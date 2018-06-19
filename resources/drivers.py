@@ -2,6 +2,7 @@
 
 from flask_restplus import Resource, Namespace, reqparse, fields
 from app.models import Rides
+from resources.auth import driver_required
 
 rides = Rides()
 
@@ -39,8 +40,9 @@ class ModifyRide(Resource):
         res = rides.get_ride(ride_id=ride_id)
         return res
 
-
     @api.expect(ride_model)
+    @api.doc(security='apikey')
+    @driver_required
     def put(self, ride_id):
         """Modifying ride detail"""
 
