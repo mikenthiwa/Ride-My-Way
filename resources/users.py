@@ -2,15 +2,21 @@
 
 from flask_restplus import Namespace, Resource, fields, reqparse
 from app.models import Users
+from resources.auth import token_required
 
 user = Users()
 
 api = Namespace('Users', description='User related function')
+modify_model = api.model('modify_model', {'username': fields.String,
+                                          'password': fields.String})
 
 
 class User(Resource):
     """contain PUT"""
 
+    @api.expect(modify_model)
+    @api.doc(security='apikey')
+    @token_required
     def put(self, email):
         """modify username"""
 

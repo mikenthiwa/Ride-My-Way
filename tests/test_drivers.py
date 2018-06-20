@@ -13,7 +13,8 @@ class DriversEndpoint(ConfigTestCase):
     def test_add_ride(self):
         """Test API can add ride"""
         ride = {"route": "Komarock-Nairobi", "driver": "Chris", "time": "9:00"}
-        res = self.client().post('/api/v1/driver/rides', data=json.dumps(ride), content_type='application/json')
+        res = self.client().post('/api/v1/driver/rides', data=json.dumps(ride), content_type='application/json',
+                                 headers=self.driver_header)
         self.assertIn("Ride has been successfully added", str(res.data))
         self.assertEqual(res.status_code, 201)
 
@@ -27,13 +28,14 @@ class DriversEndpoint(ConfigTestCase):
     def test_add_ride_without_route(self):
         """Test API cannot add ride with route missing"""
         ride = {"driver": "Chris", "time": "9:00"}
-        res = self.client().post('/api/v1/driver/rides', data=json.dumps(ride), content_type='application/json')
+        res = self.client().post('/api/v1/driver/rides', data=json.dumps(ride),
+                                 headers=self.driver_header, content_type='application/json')
         self.assertIn("Route is not provided Missing required parameter in the JSON body", str(res.data))
 
     def test_accept_ride(self):
         """Test API driver can accept ride"""
 
-        res = self.client().patch('/api/v1/driver/rides/1/accept')
+        res = self.client().patch('/api/v1/driver/rides/1/accept', headers=self.driver_header)
         self.assertIn("You have confirmed ride taken", str(res.data))
         self.assertEqual(res.status_code, 200)
 
@@ -64,10 +66,12 @@ class DriversEndpoint(ConfigTestCase):
     def test_delete_ride(self):
         """Test API can delete ride"""
 
-        response = self.client().delete('api/v1/driver/rides/3')
+        response = self.client().delete('api/v1/driver/rides/3', headers=self.driver_header)
         self.assertIn("Ride has been successfully deleted", str(response.data))
         self.assertEqual(response.status_code, 200)
 
+        response = self.client().delete('api/v1/driver/rides/3', headers=self.driver_header)
+        self.assertIn("invalid ride_id", str(response.data))
 
 
 

@@ -10,6 +10,8 @@ api = Namespace("Rides",  description="Passenger related operations")
 class RideList(Resource):
     """Contain GET methods"""
 
+    @api.doc(security='apikey')
+    @token_required
     def get(self):
 
         """Get all rides endpoint"""
@@ -18,9 +20,11 @@ class RideList(Resource):
 
 class Ride(Resource):
     """Contains GET method"""
+
+    @api.doc(security='apikey')
     @token_required
     def get(self, ride_id):
-        """Get a ride"""
+        """Passenger a ride"""
 
         response = rides.get_ride(ride_id=ride_id)
         return response
@@ -28,6 +32,8 @@ class Ride(Resource):
 class RequestRide(Resource):
     """Contain PATCH method"""
 
+    @api.doc(security='apikey')
+    @token_required
     def patch(self, ride_id):
         """Post a ride"""
 

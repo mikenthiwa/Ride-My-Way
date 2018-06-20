@@ -15,6 +15,8 @@ class DriverRide(Resource):
     """Contains POST method"""
 
     @api.expect(ride_model)
+    @api.doc(security='apikey')
+    @driver_required
     def post(self):
         """Add a ride endpoint"""
         parser = reqparse.RequestParser()
@@ -63,8 +65,8 @@ class ModifyRide(Resource):
             res = rides.modify_time(ride_id=ride_id, time=time)
             return res
 
-
-
+    @api.doc(security='apikey')
+    @driver_required
     def delete(self, ride_id):
         res = rides.delete_ride(ride_id=ride_id)
         return res
@@ -72,6 +74,8 @@ class ModifyRide(Resource):
 class AcceptRide(Resource):
     """Contain PATCH method"""
 
+    @api.doc(security='apikey')
+    @driver_required
     def patch(self, ride_id):
         """Driver accepts ride taken by passenger"""
 

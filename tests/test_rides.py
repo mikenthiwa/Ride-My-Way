@@ -10,7 +10,7 @@ class RidesEndpoint(ConfigTestCase):
     def test_get_all_rides(self):
         """Test API can get all rides"""
 
-        res = self.client().get('/api/v1/rides')
+        res = self.client().get('/api/v1/rides', headers=self.user_header)
         self.assertEqual(res.status_code, 200)
         self.assertIn("Syokimau - Nairobi", str(res.data))
 
@@ -27,10 +27,8 @@ class RidesEndpoint(ConfigTestCase):
         res = self.client().get('/api/v1/rides/105', headers=self.user_header)
         self.assertIn("invalid ride_id", str(res.data))
 
-        res_del = self.client().delete('/api/v1/driver/rides/100')
+        res_del = self.client().get('/api/v1/driver/rides/100', headers=self.user_header)
         self.assertIn("invalid ride_id", str(res_del.data))
-
-
 
     def test_request_ride(self):
         """Test API can request a ride"""
