@@ -10,6 +10,10 @@ users = {}
 request = {}
 
 
+def invalid_email():
+    return {"msg": "Email is not available"}
+
+
 class Users:
     """Contains all methods for class users"""
 
@@ -42,9 +46,44 @@ class Users:
         else:
             return {"msg": 'invalid email'}, 401
 
+    def get_a_user(self, email):
+        if email not in users:
+            return invalid_email()
+        response = users.get(email)
+        return response
+
+    def delete_user(self, email):
+        if email not in users:
+            return invalid_email()
+        del users[email]
+        return {"msg": 'user deleted'}
+
+    def modify_username(self, email, username):
+        if email not in users:
+            return invalid_email()
+        user = users.get(email)
+        user['username'] = username
+        return {"msg": 'username changed'}
+
+    def promote_user(self, email):
+        if email not in users:
+            return invalid_email()
+        user = users.get(email)
+        user['is_admin'] = True
+        return {"msg": 'user is admin!'}
+
+    def reset_password(self, email, password):
+        if email not in users:
+            return invalid_email()
+        user = users.get(email)
+        hashed_password = generate_password_hash(password=password, method='sha256')
+        user['password'] = hashed_password
+        return {"msg": "password changed!"}
+
 
 def invalid_ride_id():
     return {"msg": "invalid ride_id"}
+
 
 class Rides:
     """Contains methods for class ride"""
@@ -118,3 +157,6 @@ class Rides:
 
         del rides[ride_id]
         return {"msg": "Ride has been successfully deleted"}
+
+
+

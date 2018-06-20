@@ -6,7 +6,7 @@ user = Users()
 
 api = Namespace('Admin', description='Admin related operation')
 
-class Admin(Resource):
+class AdminUserList(Resource):
     """Contains get method"""
 
     @admin_required
@@ -14,4 +14,32 @@ class Admin(Resource):
         res = user.get_all_user()
         return res
 
-api.add_resource(Admin, '/admin/users', endpoint='admin')
+class AdminUser(Resource):
+    """Contain GET PUT PATCH"""
+
+    @staticmethod
+    @api.doc(security='apikey')
+    @admin_required
+    def get(email):
+        """Get one users by id"""
+        response = user.get_a_user(email=email)
+        return response
+
+    @api.doc(security='apikey')
+    @admin_required
+    def delete(self, email):
+        """Delete user"""
+        response = user.delete_user(email=email)
+        return response
+
+    @api.doc(security='apikey')
+    @admin_required
+    def patch(self, email):
+        """Update user to admin"""
+        response =  user.promote_user(email=email)
+        return response
+
+
+
+api.add_resource(AdminUserList, '/admin/users', endpoint='admin')
+api.add_resource(AdminUser, '/admin/users/<string:email>')

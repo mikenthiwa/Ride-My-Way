@@ -31,7 +31,7 @@ def create_app(config_name):
     from resources.rides import api as rides
     api.add_namespace(rides, path='/api/v1')
 
-    from resources.users import api as reg_login
+    from resources.signup_login import api as reg_login
     api.add_namespace(reg_login, path='/api/v1')
 
     from resources.drivers import api as driver
@@ -39,5 +39,8 @@ def create_app(config_name):
 
     from resources.admin import api as admin
     api.add_namespace(admin, path='/api/v1')
+
+    from resources.users import api as users
+    api.add_namespace(users, path='/api/v1')
 
     return app

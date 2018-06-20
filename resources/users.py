@@ -3,70 +3,33 @@
 from flask_restplus import Namespace, Resource, fields, reqparse
 from app.models import Users
 
-
 user = Users()
 
-api = Namespace('Users', description='sign-up and Login')
-
-model_register = api.model('Sign up', {'username': fields.String(required=True),
-                                       'email': fields.String(required=True),
-                                       'password': fields.String(required=True),
-                                       'is_driver': fields.String(required=True)})
-
-# model for login
-model_login = api.model('Login', {'email': fields.String,
-                                  'password': fields.String})
+api = Namespace('Users', description='User related function')
 
 
-class Register(Resource):
-    """class contain POST method"""
-    parser = reqparse.RequestParser()
-    parser.add_argument('username', required=True, help="No username provided", location=['json'])
+class User(Resource):
+    """contain PUT"""
 
-    parser.add_argument('email', required=True, help="No email provided", location=['json'])
+    def put(self, email):
+        """modify username"""
 
-    parser.add_argument('password', required=True, help="No password provided", location=['json'])
+        parser = reqparse.RequestParser()
+        parser.add_argument('username', required=False, help="No username provided", location=['json'])
+        parser.add_argument('password', required=False, help="No username provided", location=['json'])
 
-    parser.add_argument('is_driver', required=False, location=['json'])
-
-    @api.expect(model_register)
-    def post(self):
-        """Register user"""
-        args = self.parser.parse_args(strict=True)
-
+        args = parser.parse_args(strict=True)
         username = args['username']
-        email = args['email']
         password = args['password']
-        driver = args['is_driver']
 
-        if username == "" or email == "" or password == "" or driver == "":
-            return {"msg": "Field cannot be empty"}
+        if username:
 
-        if driver == "True":
-            res = user.add_users(email=email, username=username, password=password, driver=True)
-            return res, 201
+            res = user.modify_username(email=email, username=args['username'])
+            return res
 
-        driver_res = user.add_users(email=email, username=username, password=password)
-        return driver_res, 201
+        if password:
 
+            res =user.reset_password(email=email, password=password)
+            return res
 
-
-class Login(Resource):
-    """class contain post method"""
-    req_data = reqparse.RequestParser()
-    req_data.add_argument('email', required=True, help='username required', location=['json'])
-
-    req_data.add_argument('password', required=True, help='password required', location=['json'])
-
-    @api.expect(model_login)
-    def post(self):
-        """Login user"""
-        args = self.req_data.parse_args(strict=True)
-        email = args['email']
-        password = args['password']
-        res = user.login(email=email, password=password)
-        return res
-
-
-api.add_resource(Register, '/register', endpoint='register')
-api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(User, '/auth/user/<string:email>')
