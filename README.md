@@ -100,9 +100,8 @@ pytest
 ***
 
 ## Heroku
-````
+
 https://ridemywayapiv1.herokuapp.com/api/v1/documentation
-````
 ***
 
 ## Versioning
