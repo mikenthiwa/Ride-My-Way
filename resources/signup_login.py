@@ -1,6 +1,6 @@
 # signup_login.py
 
-from flask_restplus import Namespace, Resource, fields, reqparse
+from flask_restplus import Namespace, Resource, fields, reqparse, inputs
 from app.models import Users
 
 
@@ -11,7 +11,7 @@ api = Namespace('SignUp and Login', description='Sign-up and Login')
 model_register = api.model('Sign up', {'username': fields.String(required=True),
                                        'email': fields.String(required=True),
                                        'password': fields.String(required=True),
-                                       'is_driver': fields.String(required=True)})
+                                       'is_driver': fields.Boolean})
 
 # model for login
 model_login = api.model('Login', {'email': fields.String,
@@ -23,7 +23,8 @@ class Register(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('username', required=True, help="No username provided", location=['json'])
 
-    parser.add_argument('email', required=True, help="No email provided", location=['json'])
+    parser.add_argument('email', required=True, help="No email provided", location=['json'],
+                        type=inputs.regex(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"))
 
     parser.add_argument('password', required=True, help="No password provided", location=['json'])
 
@@ -42,7 +43,7 @@ class Register(Resource):
         if username == "" or email == "" or password == "" or driver == "":
             return {"msg": "Field cannot be empty"}
 
-        if driver == "True":
+        if driver == True:
             res = user.add_users(email=email, username=username, password=password, driver=True)
             return res, 201
 
@@ -54,7 +55,8 @@ class Register(Resource):
 class Login(Resource):
     """class contain post method"""
     req_data = reqparse.RequestParser()
-    req_data.add_argument('email', required=True, help='username required', location=['json'])
+    req_data.add_argument('email', required=True, help='username required', location=['json'],
+                          type=inputs.regex(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"))
 
     req_data.add_argument('password', required=True, help='password required', location=['json'])
 
