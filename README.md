@@ -12,6 +12,9 @@ Go to https://github.com/mikenthiwa/Ride-My-Way.git
 Download or clone the repository to your local machine. 
 Open the project using your ide
 ```
+
+***
+
 ## Prerequisites
 ***
 
@@ -22,6 +25,8 @@ Open the project using your ide
 * Postman
 * Browser e.g Chrome, firefox, safari
 
+***
+
 ## Installing
 
 #### Creating virtual environment
@@ -31,6 +36,8 @@ On the root directory folder, open cmd.
 * Run the command: virtualenv venv
 * Activating virtual environment : cd venv\Scripts: activate 
 ````
+
+***
 ### Application requirements
 
 The requirements.txt files will contain all the requirements needed 
@@ -39,12 +46,16 @@ To install the requirements :
 ````
 pip install -r requirements.txt 
 ````
+
+***
 Ensure you are located within the root directory and your virtual env. is activated <br/>
 Some of the third party modules that will be installed are: 
 * flask - Python module used for building web application.
 * flask-restplus - flask extension used for developing API.
 * Coverage - Python module used in testing, for assessing the quantity of test covered.
 * Pytest - Python module for running test.
+
+***
 
 ### Postman
 Application used for testing endpoint. <br>
@@ -66,15 +77,18 @@ Endpoint available for this api are shown in the table below:
    PUT        |  /api/vi/auth/user/email             | Reset username                       
    GET        |  /api/v1/admin/users                 | Get all users
    PATCH      |  /api/v1/admin/users/<int:user_id>   | Promote users
+
 ````
 ## Running test
 ````
 coverage run -m unittest
 pytest
 ````
+***
 
 ## Built using
 
+* python 3.6.5
 * Flask
 * flask-restplus
 
@@ -84,10 +98,12 @@ pytest
 ## Versioning
 Most recent version: version 1
 
+***
+
 ## Authors
 Michael Mutua 
 
-
+***
 
 
     
