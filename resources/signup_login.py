@@ -6,7 +6,7 @@ from app.models import Users
 
 user = Users()
 
-api = Namespace('SignUp and Login', description='sign-up and Login')
+api = Namespace('SignUp and Login', description='Sign-up and Login')
 
 model_register = api.model('Sign up', {'username': fields.String(required=True),
                                        'email': fields.String(required=True),
