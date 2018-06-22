@@ -73,6 +73,14 @@ coverage run -m unittest
 pytest
 ````
 
+## Built using
+
+* Flask
+* flask-restplus
+
+***
+
+
 ## Versioning
 Most recent version: version 1
 
