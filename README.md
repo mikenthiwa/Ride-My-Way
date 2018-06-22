@@ -51,8 +51,8 @@ Application used for testing endpoint. <br>
 Endpoint available for this api are shown in the table below:
 ````
 
-|Requests     |   EndPoint                          | Functionality
-|:-----------:|:-----------------------------------:|:--------------:
+|Requests     |   EndPoint                           | Functionality
+|:-----------:|:-------------------------------------:--------------:
    GET        |  /api/v1/rides                       | Get all Rides 
    GET        |  /api/vi/rides/{rideId}              | Get a specific ride
    DELETE     |  /api/v1/driver/rideId               | Delete ride          
@@ -72,6 +72,12 @@ Endpoint available for this api are shown in the table below:
 coverage run -m unittest
 pytest
 ````
+
+## Versioning
+Most recent version: version 1
+
+## Authors
+Michael Mutua 
 
 
 
