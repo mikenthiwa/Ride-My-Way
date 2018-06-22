@@ -1,6 +1,7 @@
 import unittest
 import sys  # fix import errors
 import os
+import json
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tests.base_config_tests import ConfigTestCase
 
@@ -33,7 +34,9 @@ class RidesEndpoint(ConfigTestCase):
     def test_request_ride(self):
         """Test API can request a ride"""
 
-        res = self.client().patch('/api/v1/users/rides/1/request', headers=self.user_header)
+        data = {"username": "mike", "pickup_point": "syo","time": "8:00"}
+        res = self.client().post('/api/v1/users/rides/1/request', data= json.dumps(data),
+                                 content_type='application/json',headers=self.user_header)
         self.assertIn("You have successfully requested a ride", str(res.data))
         self.assertEqual(res.status_code, 200)
 

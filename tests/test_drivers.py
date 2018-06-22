@@ -63,6 +63,17 @@ class DriversEndpoint(ConfigTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("Ride time has been successfully modified", str(response.data))
 
+    def test_get_all_requested_rides(self):
+        """Test API can get all requested rides"""
+
+        data = {"username": "mike", "pickup_point": "syo", "time": "8:00"}
+        self.client().post('/api/v1/users/rides/1/request', data=json.dumps(data),
+                            content_type='application/json', headers=self.user_header)
+        res = self.client().get('/api/v1/driver/requested', headers=self.driver_header)
+        self.assertIn("Syokimau - Nairobi", str(res.data))
+        self.assertEqual(res.status_code, 200)
+
+
     def test_delete_ride(self):
         """Test API can delete ride"""
 

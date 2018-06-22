@@ -17,6 +17,9 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
     app.url_map.strict_slashes = False
 
+    # Enable swagger editor
+    app.config['SWAGGER_UI_JSONEDITOR'] = True
+
     api = Api(app=app,
               title='Ride_My_Way',
               authorizations=authorizations,
@@ -25,8 +28,7 @@ def create_app(config_name):
               description='Ride-My-Way is a carpooling application that provides'
                           ' drivers with the ability to create ride'
                           ' offers and passengers to join available ride offers.')
-    # Enable swagger editor
-    app.config['SWAGGER_UI_JSONEDITOR'] = True
+
 
     from resources.rides import api as rides
     api.add_namespace(rides, path='/api/v1')

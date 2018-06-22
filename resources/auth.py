@@ -17,7 +17,7 @@ def token_required(f):
             token = request.headers['x-access-token']
 
         if token is None:
-            return make_response(jsonify({"message" : "token missing"}), 401)
+            return make_response(jsonify({"message" : "Please sign-up and login"}), 401)
 
         try:
             data = jwt.decode(token, Config.SECRET)
@@ -42,7 +42,7 @@ def driver_required(f):
 
         if token is None:
             return make_response(jsonify({
-                "message" : "token missing"}), 401)
+                "message" : "Please sign-up and login"}), 401)
 
         try:
             data = jwt.decode(token, Config.SECRET)
@@ -73,7 +73,7 @@ def admin_required(f):
             token = request.headers['x-access-token']
 
         if token is None:
-            return make_response(jsonify({"message": "token missing"}), 401)
+            return make_response(jsonify({"message": "Please sign-up and login"}), 401)
 
         try:
             data = jwt.decode(token, Config.SECRET)

@@ -101,8 +101,6 @@ class Rides:
             output.append(data)
         return output
 
-
-
     def get_ride(self, ride_id):
         if ride_id not in rides:
             return invalid_ride_id()
@@ -111,20 +109,36 @@ class Rides:
         return ride
 
     @staticmethod
-    def add_ride(route, driver, time, request="Request to join this ride", accept=False):
+    def add_ride(route, driver, time, request="Request to join this ride"):
         new_id = len(rides) + 1
         rides[new_id] = {"Route": route,
                          "Driver": driver,
                          "Time": time,
-                         "request": request,
-                         "accept": accept}
+                         "request": request}
         return {"msg": "Ride has been successfully added"}
 
-    def request_ride(self, ride_id):
+    def request_ride(self, ride_id, username, pickup_point, time, accept="accept", reject="reject"):
         ride = rides.get(ride_id)
         ride["request"] = "You have requested to join this ride"
-        request[ride_id] = {"Route": rides[ride_id]["Route"]}
+        request[ride_id] = {"route": rides[ride_id]["Route"],
+                            "username": username,
+                            "pickup_point": pickup_point,
+                            "time": time,
+                            "accept": accept,
+                            "reject": reject}
         return {"msg": "You have successfully requested a ride"}
+
+    def get_all_requested_rides(self):
+        output = []
+        for ride_id in request:
+            data = {}
+            data["route"] = request[ride_id]["route"]
+            data["username"] = request[ride_id]["username"]
+            data["pickup_point"] = request[ride_id]["pickup_point"]
+            data["time"] = request[ride_id]["time"]
+            output.append(data)
+        return output
+
 
     def accept_ride_taken(self, ride_id):
         ride = rides.get(ride_id)
@@ -157,6 +171,3 @@ class Rides:
 
         del rides[ride_id]
         return {"msg": "Ride has been successfully deleted"}
-
-
-

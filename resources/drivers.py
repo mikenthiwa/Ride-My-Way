@@ -11,8 +11,9 @@ ride_model = api.model("Ride", {'route': fields.String,
                                 'driver': fields.String,
                                 'time': fields.String})
 
+
 class DriverRide(Resource):
-    """Contains POST method"""
+    """Contains GET POST method"""
 
     @api.expect(ride_model)
     @api.doc(security='apikey')
@@ -37,7 +38,7 @@ class ModifyRide(Resource):
     parser.add_argument("time", type=str, required=False, location=['json'])
 
     def get(self, ride_id):
-        """Get a ride """
+        """Get specific ride ride """
 
         res = rides.get_ride(ride_id=ride_id)
         return res
@@ -82,8 +83,15 @@ class AcceptRide(Resource):
         res = rides.accept_ride_taken(ride_id=ride_id)
         return res
 
+class RequestedRide(Resource):
+    """Contain GET method"""
 
+    @driver_required
+    def get(self):
+        res = rides.get_all_requested_rides()
+        return res
 
 api.add_resource(DriverRide, '/driver/rides')
 api.add_resource(ModifyRide, '/driver/rides/<int:ride_id>')
 api.add_resource(AcceptRide, '/driver/rides/<int:ride_id>/accept')
+api.add_resource(RequestedRide, '/driver/requested', endpoint='requested')

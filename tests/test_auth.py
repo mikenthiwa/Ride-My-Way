@@ -17,17 +17,17 @@ class Auth(ConfigTestCase):
         route = {"route": "Nakuru - Naivasha"}
         response = self.client().put('/api/v1/driver/rides/1',  data=json.dumps(route), content_type='application/json')
         self.assertEqual(response.status_code, 401)
-        self.assertIn("token missing", str(response.data))
+        self.assertIn("Please sign-up and login", str(response.data))
 
         # missing user token
         res = self.client().get('/api/v1/rides/1',  content_type='application/json')
         self.assertEqual(res.status_code, 401)
-        self.assertIn("token missing", str(res.data))
+        self.assertIn("Please sign-up and login", str(res.data))
 
         # missing admin token
         admin_res = self.client().get('api/v1/admin/users')
         self.assertEqual(admin_res.status_code, 401)
-        self.assertIn("token missing", str(admin_res.data))
+        self.assertIn("Please sign-up and login", str(admin_res.data))
 
 
     def test_invalid_token(self):
