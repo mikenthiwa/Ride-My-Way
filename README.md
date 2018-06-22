@@ -99,6 +99,12 @@ pytest
 
 ***
 
+## Heroku
+````
+https://ridemywayapiv1.herokuapp.com/api/v1/documentation
+````
+***
+
 ## Versioning
 Most recent version: version 1
 
