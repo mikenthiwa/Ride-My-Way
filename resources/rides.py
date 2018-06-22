@@ -39,7 +39,7 @@ class RequestRide(Resource):
     @api.doc(security='apikey')
     @token_required
     def post(self, ride_id):
-        """Post a ride"""
+        """Request ride"""
         parser = reqparse.RequestParser()
         parser.add_argument('username', required=True, type=str, help='Username is required', location=['json'])
         parser.add_argument('pickup_point', required=True, type=str, help='Pickup_point is required', location=['json'])
