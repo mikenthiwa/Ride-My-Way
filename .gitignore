@@ -4,3 +4,6 @@ env.bat
 app/__pycache__/
 resources/__pycache__/
 tests/__pycache__/
+.pytest_cache/
+__pycache__/
+htmlcov/
