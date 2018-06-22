@@ -6,6 +6,8 @@
 
 Ride-my App(apiv1) is a carpooling api that provides drivers with the ability to create ride offers and passengers  to join available ride offers.
 
+***
+
 ## Getting Started
 ```
 Go to https://github.com/mikenthiwa/Ride-My-Way.git 
@@ -16,7 +18,6 @@ Open the project using your ide
 ***
 
 ## Prerequisites
-***
 
 * Python 3 and above.
 * Virtual environment.
