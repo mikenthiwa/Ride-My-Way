@@ -106,6 +106,12 @@ Michael Mutua
 
 ***
 
+## Acknowledgments
 
+* Hat tip to anyone whose code was used
+* Inspiration and encouragement
+* etc
+
+***
     
  
