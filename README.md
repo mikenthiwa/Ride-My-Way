@@ -8,7 +8,7 @@ Ride-my App(apiv1) is a carpooling api that provides drivers with the ability to
 
 ***
 
-![Home Image](https://raw.github.com/![Home Image](https://raw.github.com/mikenthiwa/Ride-My-Way/apiv1/img.png)
+![Home Image](https://raw.github.com/mikenthiwa/Ride-My-Way/apiv1/img.png)
 
 ## Getting Started
 ```
