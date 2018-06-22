@@ -7,12 +7,13 @@
 Ride-my App(apiv1) is a carpooling api that provides drivers with the ability to create ride offers and passengers  to join available ride offers.
 
 ## Getting Started
-
-Go to https://github.com/mikenthiwa/Ride-My-Way/tree/apiv1.<br/>
-Download or clone the repository to your local machine.<br/>
+```
+Go to https://github.com/mikenthiwa/Ride-My-Way.git 
+Download or clone the repository to your local machine. 
 Open the project using your ide
-
+```
 ## Prerequisites
+***
 
 * Python 3 and above.
 * Virtual environment.
@@ -23,21 +24,21 @@ Open the project using your ide
 
 ## Installing
 
-#### Virtual environment
+#### Creating virtual environment
 
-* On the root directory folder, open cmd.
-* Run the command: virtualenv venv,  to create a virtual <br/>
- environment with the name venv. Folder with the name venv will <br>
- created.
-* Activate the virtual environment by moving to <br>
-to the Script directory i.e. cd venv\Scripts, and running <br>
-activate.
-
+On the root directory folder, open cmd.
+````
+* Run the command: virtualenv venv
+* Activating virtual environment : cd venv\Scripts: activate 
+````
 ### Application requirements
 
 The requirements.txt files will contain all the requirements needed 
 for the application. <br>
-To install the requirements, simply run in cmd: pip install -r requirements.txt <br/>
+To install the requirements :
+````
+pip install -r requirements.txt 
+````
 Ensure you are located within the root directory and your virtual env. is activated <br/>
 Some of the third party modules that will be installed are: 
 * flask - Python module used for building web application.
@@ -48,25 +49,29 @@ Some of the third party modules that will be installed are:
 ### Postman
 Application used for testing endpoint. <br>
 Endpoint available for this api are shown in the table below:
+````
 
 |Requests     |   EndPoint                          | Functionality
 |:-----------:|:-----------------------------------:|:--------------:
-   GET        |  api/v1/rides                       | Get all Rides 
-   GET        |  api/vi/rides/{rideId}              | Get a specific ride
-   DELETE     |  api/v1/driver/rideId               | Delete ride          
-   POST       |  api/v1/driver/rides                | Add a ride                  
-   PATCH      |  api/v1/rides/{rideId}/Request      | Request to join a ride
-   PATCH      |  api/v1/driver/rides/rideId/Accept  | Accept the request passengers request
-   PUT        |  api/vi/driver/rides/rideId         | Modify ride details
-   POST       |  api/v1/register                    | Register users
-   POST       |  api/v1/login                       | Login user                       
-
+   GET        |  /api/v1/rides                       | Get all Rides 
+   GET        |  /api/vi/rides/{rideId}              | Get a specific ride
+   DELETE     |  /api/v1/driver/rideId               | Delete ride          
+   POST       |  /api/v1/driver/rides                | Add a ride                  
+   PATCH      |  /api/v1/rides/{rideId}/Request      | Request to join a ride
+   PATCH      |  /api/v1/driver/rides/rideId/Accept  | Accept the request passengers request
+   PUT        |  /api/vi/driver/rides/rideId         | Modify ride details
+   POST       |  /api/v1/register                    | Register users
+   POST       |  /api/v1/login                       | Login user
+   PUT        |  /api/v1/auth/user/email             | Reset password
+   PUT        |  /api/vi/auth/user/email             | Reset username                       
+   GET        |  /api/v1/admin/users                 | Get all users
+   PATCH      |  /api/v1/admin/users/<int:user_id>   | Promote users
+````
 ## Running test
-
-Running test can be done by using unittest, pytest.
-To run test you can either run the following commands in cmd:
-* coverage run -m unittest
-* pytest
+````
+coverage run -m unittest
+pytest
+````
 
 
 
