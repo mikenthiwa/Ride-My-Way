@@ -78,8 +78,10 @@ Endpoint available for this api are shown in the table below:
    PUT        |  /api/vi/auth/user/email             | Reset username                       
    GET        |  /api/v1/admin/users                 | Get all users
    PATCH      |  /api/v1/admin/users/<int:user_id>   | Promote users
-
 ````
+
+***
+
 ## Running test
 ````
 coverage run -m unittest
@@ -94,7 +96,6 @@ pytest
 * flask-restplus
 
 ***
-
 
 ## Versioning
 Most recent version: version 1
