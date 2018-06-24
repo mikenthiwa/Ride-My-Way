@@ -12,26 +12,26 @@ class UserEndpoint(ConfigTestCase):
     def test_change_username(self):
         """Test API can change username"""
         username = {"username": "admin2"}
-        res = self.client().put('/api/v1/auth/user/test_user@gmail.com', data=json.dumps(username),
+        res = self.client().put('/api/v2/auth/user/test_user@gmail.com', data=json.dumps(username),
                                 headers=self.user_header, content_type='application/json')
         self.assertIn("username changed", str(res.data))
 
         # invalid email
-        res1 = self.client().put('/api/v1/auth/user/chris@gmail.com', data=json.dumps(username),
+        res1 = self.client().put('/api/v2/auth/user/chris@gmail.com', data=json.dumps(username),
                                  headers=self.user_header, content_type='application/json')
-        self.assertIn("Email is not available", str(res1.data))
+        self.assertIn("email is not available", str(res1.data))
 
     def test_reset_password(self):
         """Test API can change password"""
         password = {"password": "admin2018"}
-        res = self.client().put('/api/v1/auth/user/test_user@gmail.com', data=json.dumps(password),
+        res = self.client().put('/api/v2/auth/user/test_user@gmail.com', data=json.dumps(password),
                                 headers=self.user_header, content_type='application/json')
         self.assertIn("password changed!", str(res.data))
 
         # invalid email
-        res1 = self.client().put('/api/v1/auth/user/chris_user@gmail.com', data=json.dumps(password),
+        res1 = self.client().put('/api/v2/auth/user/chris_user@gmail.com', data=json.dumps(password),
                                  headers=self.user_header, content_type='application/json')
-        self.assertIn("Email is not available", str(res1.data))
+        self.assertIn("email is not available", str(res1.data))
 
 
 if __name__ == '__main__':

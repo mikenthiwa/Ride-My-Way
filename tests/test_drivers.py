@@ -13,7 +13,7 @@ class DriversEndpoint(ConfigTestCase):
     def test_add_ride(self):
         """Test API can add ride"""
         ride = {"route": "Komarock-Nairobi", "driver": "Chris", "time": "9:00"}
-        res = self.client().post('/api/v1/driver/rides', data=json.dumps(ride), content_type='application/json',
+        res = self.client().post('/api/v2/driver/rides', data=json.dumps(ride), content_type='application/json',
                                  headers=self.driver_header)
         self.assertIn("Ride has been successfully added", str(res.data))
         self.assertEqual(res.status_code, 201)
@@ -21,55 +21,72 @@ class DriversEndpoint(ConfigTestCase):
     def test_get_ride(self):
         """Test API can get ride for driver"""
 
-        res = self.client().get('/api/v1/driver/rides/1')
+        res = self.client().get('/api/v2/driver/rides/1')
         self.assertIn("Syokimau - Nairobi", str(res.data))
         self.assertEqual(res.status_code, 200)
 
     def test_add_ride_without_route(self):
         """Test API cannot add ride with route missing"""
         ride = {"driver": "Chris", "time": "9:00"}
-        res = self.client().post('/api/v1/driver/rides', data=json.dumps(ride),
+        res = self.client().post('/api/v2/driver/rides', data=json.dumps(ride),
                                  headers=self.driver_header, content_type='application/json')
         self.assertIn("Route is not provided Missing required parameter in the JSON body", str(res.data))
 
     def test_accept_ride(self):
         """Test API driver can accept ride"""
 
-        res = self.client().patch('/api/v1/driver/rides/1/accept', headers=self.driver_header)
-        self.assertIn("You have confirmed ride taken", str(res.data))
+        res = self.client().patch('/api/v2/driver/rides/1/accept', headers=self.driver_header)
+        self.assertIn("A notification has been sent to passenger", str(res.data))
         self.assertEqual(res.status_code, 200)
 
     def test_modify_route(self):
         """Test API can modify route"""
         route = {"route": "Nakuru - Naivasha"}
-        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(route),
+        response = self.client().put('/api/v2/driver/rides/2', data=json.dumps(route),
                                      content_type='application/json', headers=self.driver_header)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Route has been successfully modified", str(response.data))
 
+        #invalid id
+        res = self.client().put('/api/v2/driver/rides/20', data=json.dumps(route),
+                                content_type='application/json', headers=self.driver_header)
+        self.assertIn("Ride is not available", str(res.data))
+        self.assertEqual(res.status_code, 404)
+
     def test_modify_ride_driver(self):
         """Test API can modify driver's name"""
         driver = {"driver": "Francis Ole Kaparo"}
-        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(driver),
+        response = self.client().put('/api/v2/driver/rides/2', data=json.dumps(driver),
                                      content_type='application/json', headers=self.driver_header)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Driver has been successfully modified", str(response.data))
 
+        res = self.client().put('/api/v2/driver/rides/20', data=json.dumps(driver),
+                                content_type='application/json', headers=self.driver_header)
+        self.assertIn("Ride is not available", str(res.data))
+        self.assertEqual(res.status_code, 404)
+
     def test_modify_ride_time(self):
         """Test API can modify route"""
         time = {"time": "10:00"}
-        response = self.client().put('/api/v1/driver/rides/2', data=json.dumps(time),
+        response = self.client().put('/api/v2/driver/rides/2', data=json.dumps(time),
                                      content_type='application/json', headers=self.driver_header)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Ride time has been successfully modified", str(response.data))
 
+        # invalid ride
+        res = self.client().put('/api/v2/driver/rides/20', data=json.dumps(time), content_type='application/json',
+                                headers=self.driver_header)
+        self.assertIn("Ride is not available", str(res.data))
+        self.assertEqual(res.status_code, 404)
+
     def test_get_all_requested_rides(self):
         """Test API can get all requested rides"""
 
-        data = {"username": "mike", "pickup_point": "syo", "time": "8:00"}
-        self.client().post('/api/v1/users/rides/1/request', data=json.dumps(data),
+        data = {"username": "mike", "pickup_point": "Syokimau - Nairobii", "time": "8:00"}
+        self.client().post('/api/v2/users/rides/1/request', data=json.dumps(data),
                             content_type='application/json', headers=self.user_header)
-        res = self.client().get('/api/v1/driver/requested', headers=self.driver_header)
+        res = self.client().get('/api/v2/driver/requested', headers=self.driver_header)
         self.assertIn("Syokimau - Nairobi", str(res.data))
         self.assertEqual(res.status_code, 200)
 
@@ -77,12 +94,12 @@ class DriversEndpoint(ConfigTestCase):
     def test_delete_ride(self):
         """Test API can delete ride"""
 
-        response = self.client().delete('api/v1/driver/rides/3', headers=self.driver_header)
+        response = self.client().delete('api/v2/driver/rides/1', headers=self.driver_header)
         self.assertIn("Ride has been successfully deleted", str(response.data))
         self.assertEqual(response.status_code, 200)
 
-        response = self.client().delete('api/v1/driver/rides/3', headers=self.driver_header)
-        self.assertIn("invalid ride_id", str(response.data))
+        response = self.client().delete('api/v2/driver/rides/3', headers=self.driver_header)
+        self.assertIn("Ride is not available", str(response.data))
 
 
 

@@ -1,10 +1,11 @@
 # drivers.py
 
 from flask_restplus import Resource, Namespace, reqparse, fields
-from app.models import Rides
+from app.models import Rides, Request
 from resources.auth import driver_required
 
 rides = Rides()
+request = Request()
 
 api = Namespace("Driver",  description="Driver related operations")
 ride_model = api.model("Ride", {'route': fields.String,
@@ -80,7 +81,7 @@ class AcceptRide(Resource):
     def patch(self, ride_id):
         """Driver accepts ride taken by passenger"""
 
-        res = rides.accept_ride_taken(ride_id=ride_id)
+        res = request.accept_ride_taken(ride_id=ride_id)
         return res
 
 class RequestedRide(Resource):
@@ -88,7 +89,7 @@ class RequestedRide(Resource):
 
     @driver_required
     def get(self):
-        res = rides.get_all_requested_rides()
+        res = request.get_all_requested_rides()
         return res
 
 api.add_resource(DriverRide, '/driver/rides')

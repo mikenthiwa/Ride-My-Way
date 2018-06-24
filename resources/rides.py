@@ -1,8 +1,9 @@
 from flask_restplus import Resource, Namespace, reqparse, fields
-from app.models import Rides
+from app.models import Rides, Request
 from resources.auth import token_required
 
 rides = Rides()
+request = Request()
 
 api = Namespace("Rides",  description="Passenger related operations")
 
@@ -50,8 +51,9 @@ class RequestRide(Resource):
         pickup_point = args['pickup_point']
         time = args['time']
 
-        res = rides.request_ride(ride_id=ride_id, username=username, pickup_point=pickup_point, time=time)
+        res = request.request_ride(username=username, pickup_point=pickup_point, time=time)
         return res
+
 
 
 api.add_resource(RideList, '/rides', endpoint='ridelist')

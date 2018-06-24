@@ -7,6 +7,7 @@ class Config(object):
     """Parent configuration class."""
     DEBUG = False
     SECRET = os.getenv('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.getenv('Ride_My_Way')
 
 
 class DevelopmentConfig(Config):
@@ -18,6 +19,7 @@ class TestingConfig(Config):
     """Configurations for Testing."""
     TESTING = True
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.getenv('Ride_My_Way_test_db')
 
 
 class ProductionConfig(Config):

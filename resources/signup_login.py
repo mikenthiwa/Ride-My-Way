@@ -11,7 +11,7 @@ api = Namespace('SignUp and Login', description='Sign-up and Login')
 model_register = api.model('Sign up', {'username': fields.String(required=True),
                                        'email': fields.String(required=True),
                                        'password': fields.String(required=True),
-                                       'is_driver': fields.Boolean})
+                                       'is_driver': fields.Boolean(default=False)})
 
 # model for login
 model_login = api.model('Login', {'email': fields.String,
@@ -43,12 +43,14 @@ class Register(Resource):
         if username == "" or email == "" or password == "" or driver == "":
             return {"msg": "Field cannot be empty"}
 
-        if driver == True:
-            res = user.add_users(email=email, username=username, password=password, driver=True)
+        if driver == "True":
+            res = user.add_driver(email=email, username=username, password=password)
             return res, 201
 
-        driver_res = user.add_users(email=email, username=username, password=password)
-        return driver_res, 201
+        else:
+            res = user.add_users(email=email, username=username, password=password)
+            return res, 201
+
 
 
 

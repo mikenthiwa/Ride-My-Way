@@ -13,7 +13,7 @@ class SignUpEndpoint(ConfigTestCase):
 
         user = {"username": 'teddy', "email": 'teddy@gmail.com', "password": '123456789'}
 
-        response = self.client().post('/api/v1/register', data=json.dumps(user), content_type='application/json')
+        response = self.client().post('/api/v2/register', data=json.dumps(user), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertIn("You have been successfully added", str(response.data))
 
@@ -21,7 +21,7 @@ class SignUpEndpoint(ConfigTestCase):
         """Test API can register driver successful"""
 
         user = {"username": 'Mark', "email": 'mark@gmail.com', "password": '123456789', "is_driver": "True"}
-        response = self.client().post('/api/v1/register', data=json.dumps(user), content_type='application/json')
+        response = self.client().post('/api/v2/register', data=json.dumps(user), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertIn("You have been successfully added", str(response.data))
 
@@ -29,10 +29,8 @@ class SignUpEndpoint(ConfigTestCase):
         """Test API for empty field"""
 
         user = {"username": '', "email": 'teddy@gmail.com', "password": '123456789'}
-        response = self.client().post('/api/v1/register', data=json.dumps(user), content_type='application/json')
+        response = self.client().post('/api/v2/register', data=json.dumps(user), content_type='application/json')
         self.assertIn("Field cannot be empty", str(response.data))
-
-
 
 
 if __name__ == '__main__':

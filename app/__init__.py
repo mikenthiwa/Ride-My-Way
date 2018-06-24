@@ -2,9 +2,12 @@
 
 from flask import Flask
 from flask_restplus import Api
+from flask_sqlalchemy import SQLAlchemy
 
 from instance.config import app_config
 
+
+db = SQLAlchemy()
 
 def create_app(config_name):
     # Expect token in api_doc
@@ -19,6 +22,9 @@ def create_app(config_name):
 
     # Enable swagger editor
     app.config['SWAGGER_UI_JSONEDITOR'] = True
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db.init_app(app=app)
 
     api = Api(app=app,
               title='Ride_My_Way',
@@ -30,19 +36,20 @@ def create_app(config_name):
                           ' offers and passengers to join available ride offers.')
 
 
+
     from resources.rides import api as rides
-    api.add_namespace(rides, path='/api/v1')
+    api.add_namespace(rides, path='/api/v2')
 
     from resources.signup_login import api as reg_login
-    api.add_namespace(reg_login, path='/api/v1')
+    api.add_namespace(reg_login, path='/api/v2')
 
     from resources.drivers import api as driver
-    api.add_namespace(driver, path='/api/v1')
+    api.add_namespace(driver, path='/api/v2')
 
     from resources.admin import api as admin
-    api.add_namespace(admin, path='/api/v1')
+    api.add_namespace(admin, path='/api/v2')
 
     from resources.users import api as users
-    api.add_namespace(users, path='/api/v1')
+    api.add_namespace(users, path='/api/v2')
 
     return app
