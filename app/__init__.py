@@ -29,7 +29,7 @@ def create_app(config_name):
     api = Api(app=app,
               title='Ride_My_Way',
               authorizations=authorizations,
-              version='1.0',
+              version='2.0',
               doc='/api/v1/documentation',
               description='Ride-My-Way is a carpooling application that provides'
                           ' drivers with the ability to create ride'
