@@ -35,8 +35,6 @@ def create_app(config_name):
                           ' drivers with the ability to create ride'
                           ' offers and passengers to join available ride offers.')
 
-
-
     from resources.rides import api as rides
     api.add_namespace(rides, path='/api/v2')
 
