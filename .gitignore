@@ -7,3 +7,5 @@ tests/__pycache__/
 .pytest_cache/
 __pycache__/
 htmlcov/
+instance/__pycache__/__init__.cpython-36.pyc
+instance/__pycache__/config.cpython-36.pyc
