@@ -21,6 +21,7 @@ class Users:
         return users
 
     def add_users(self, email, username, password, driver=False, admin=False):
+        """Creates new user"""
         hashed_password = generate_password_hash(password=password, method='sha256')
         users[email] = {"username": username,
                         "password": hashed_password,
@@ -29,6 +30,7 @@ class Users:
         return {"msg": "You have been successfully added"}
 
     def login(self, email, password):
+        """Login registered users"""
         if email in users:
             if check_password_hash(users[email]['password'], password):
 
@@ -47,18 +49,21 @@ class Users:
             return {"msg": 'invalid email'}, 401
 
     def get_a_user(self, email):
+        """Get a specific user"""
         if email not in users:
             return invalid_email()
         response = users.get(email)
         return response
 
     def delete_user(self, email):
+        "Delete a user"
         if email not in users:
             return invalid_email()
         del users[email]
         return {"msg": 'user deleted'}
 
     def modify_username(self, email, username):
+        """Modify the username of a specific user"""
         if email not in users:
             return invalid_email()
         user = users.get(email)
@@ -66,6 +71,7 @@ class Users:
         return {"msg": 'username changed'}
 
     def promote_user(self, email):
+        """Make a user an admin"""
         if email not in users:
             return invalid_email()
         user = users.get(email)
@@ -73,6 +79,7 @@ class Users:
         return {"msg": 'user is admin!'}
 
     def reset_password(self, email, password):
+        """Reset the password of specific user"""
         if email not in users:
             return invalid_email()
         user = users.get(email)
@@ -82,6 +89,7 @@ class Users:
 
 
 def invalid_ride_id():
+    """Returns a message for invalid id"""
     return {"msg": "invalid ride_id"}
 
 
@@ -90,6 +98,7 @@ class Rides:
 
     @staticmethod
     def get_rides():
+        """Gets all rides"""
         output = []
         for ride_id in rides:
             data = {}
@@ -102,6 +111,7 @@ class Rides:
         return output
 
     def get_ride(self, ride_id):
+        """Get a specific ride"""
         if ride_id not in rides:
             return invalid_ride_id()
 
@@ -110,6 +120,7 @@ class Rides:
 
     @staticmethod
     def add_ride(route, driver, time, request="Request to join this ride"):
+        """Add new ride"""
         new_id = len(rides) + 1
         rides[new_id] = {"Route": route,
                          "Driver": driver,
@@ -118,6 +129,7 @@ class Rides:
         return {"msg": "Ride has been successfully added"}
 
     def request_ride(self, ride_id, username, pickup_point, time, accept="accept", reject="reject"):
+        """Request a ride"""
         ride = rides.get(ride_id)
         ride["request"] = "You have requested to join this ride"
         request[ride_id] = {"route": rides[ride_id]["Route"],
@@ -129,6 +141,7 @@ class Rides:
         return {"msg": "You have successfully requested a ride"}
 
     def get_all_requested_rides(self):
+        """Driver can request all rides"""
         output = []
         for ride_id in request:
             data = {}
@@ -141,6 +154,7 @@ class Rides:
 
 
     def accept_ride_taken(self, ride_id):
+        """Driver can accept a ride selected"""
         ride = rides.get(ride_id)
         ride["accept"] = True
         return {"msg": "You have confirmed ride taken"}
@@ -148,24 +162,28 @@ class Rides:
 
     @staticmethod
     def modify_driver(ride_id, driver):
+        """Changes details of a driver"""
         ride_details = rides[ride_id]
         ride_details["Driver"] = driver
         return {"msg": "Driver has been successfully modified"}
 
     @staticmethod
     def modify_route(ride_id, route):
+        """Changes details of a route"""
         ride_details = rides[ride_id]
         ride_details["Route"] = route
         return {"msg": "Route has been successfully modified"}
 
     @staticmethod
     def modify_time(ride_id, time):
+        """Changes time of a particular ride"""
         ride_details = rides[ride_id]
         ride_details["Time"] = time
         return {"msg": "Ride time has been successfully modified"}
 
     @staticmethod
     def delete_ride(ride_id):
+        """Deleting a particular ride"""
         if ride_id not in rides:
             return invalid_ride_id()
 
