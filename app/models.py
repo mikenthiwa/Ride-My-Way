@@ -4,11 +4,59 @@ import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 import os
+import psycopg2
+from instance.config import config
 
 
 rides = {}
 users = {}
 request = {}
+
+def create_tables():
+    """ create tables in the PostgreSQL database"""
+    commands = ("""
+        CREATE TABLE users (
+            user_id SERIAL PRIMARY KEY,
+            email VARCHAR(50) NOT NULL,
+            username VARCHAR(100) NOT NULL,
+            password VARCHAR(50) NOT NULL,
+            is_driver BOOLEAN NULL,
+            is_admin BOOLEAN NULL )
+        """,
+
+        """ CREATE TABLE rides (
+                       ride_id SERIAL PRIMARY KEY,
+                       route VARCHAR(155) NOT NULL,
+                       driver VARCHAR(150) NOT NULL,
+                       request BOOLEAN NULL)
+        """,
+        """ CREATE TABLE request (
+                       id SERIAL PRIMARY KEY,
+                       username VARCHAR(155) NOT NULL,
+                       pickup_point VARCHAR(150) NOT NULL,
+                       time VARCHAR(10) NOT NULL,
+                       request BOOLEAN NULL)
+        """
+        )
+    conn = None
+    try:
+        # read the connection parameters
+        params = config()
+        # connect to the PostgreSQL server
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        # create table one by one
+        for command in commands:
+            cur.execute(command)
+        # close communication with the PostgreSQL database server
+        cur.close()
+        # commit the changes
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
 
 
 def invalid_email():
