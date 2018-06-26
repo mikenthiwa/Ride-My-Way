@@ -22,6 +22,7 @@ class Users:
 
     def add_users(self, email, username, password, driver=False, admin=False):
         """Creates new user"""
+
         hashed_password = generate_password_hash(password=password, method='sha256')
         users[email] = {"username": username,
                         "password": hashed_password,
