@@ -1,4 +1,6 @@
 # config.py
+import os
+from configparser import ConfigParser
 
 def config(filename='database.ini', section='postgresql'):
     # create a parser
@@ -17,8 +19,7 @@ def config(filename='database.ini', section='postgresql'):
 
     return db
 
-import os
-from configparser import ConfigParser
+
 
 class Config(object):
     """Parent configuration class."""
@@ -41,8 +42,6 @@ class ProductionConfig(Config):
     """Configurations for Production."""
     DEBUG = False
     TESTING = False
-
-
 
 
 app_config = {"development": DevelopmentConfig,
