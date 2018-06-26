@@ -16,10 +16,10 @@ def create_tables():
     """ create tables in the PostgreSQL database"""
     commands = ("""
         CREATE TABLE users (
-            user_id INTEGER PRIMARY KEY,
-            email VARCHAR(50) NOT NULL,
+            user_id SERIAL PRIMARY KEY,
+            email VARCHAR(150) NOT NULL,
             username VARCHAR(100) NOT NULL,
-            password VARCHAR(50) NOT NULL,
+            password VARCHAR(450) NOT NULL,
             is_driver BOOLEAN NULL,
             is_admin BOOLEAN NULL )
         """,
@@ -78,9 +78,9 @@ class Users:
         user_email = email
         user_name = username
         user_password = hashed_password
-        query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES ('" + user_email + "', '" + user_name + "', '" + user_password + "', '" + '0' +"','" + '0' +"' )"
+        query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
+                "('" + user_email + "', '" + user_name + "', '" + user_password + "', '" + '0' +"','" + '0' +"' )"
         cur.execute(query)
-
 
         conn.commit()
         return {"msg": "You have been successfully added"}
