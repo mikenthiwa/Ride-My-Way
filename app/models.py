@@ -16,7 +16,7 @@ def create_tables():
     """ create tables in the PostgreSQL database"""
     commands = ("""
         CREATE TABLE users (
-            user_id SERIAL PRIMARY KEY,
+            user_id INTEGER PRIMARY KEY,
             email VARCHAR(50) NOT NULL,
             username VARCHAR(100) NOT NULL,
             password VARCHAR(50) NOT NULL,
@@ -71,11 +71,18 @@ class Users:
 
     def add_users(self, email, username, password, driver=False, admin=False):
         """Creates new user"""
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
         hashed_password = generate_password_hash(password=password, method='sha256')
-        users[email] = {"username": username,
-                        "password": hashed_password,
-                        "is_driver": driver,
-                        "is_admin": admin}
+
+        user_email = email
+        user_name = username
+        user_password = hashed_password
+        query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES ('" + user_email + "', '" + user_name + "', '" + user_password + "', '" + '0' +"','" + '0' +"' )"
+        cur.execute(query)
+
+
+        conn.commit()
         return {"msg": "You have been successfully added"}
 
     def login(self, email, password):
