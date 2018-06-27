@@ -7,11 +7,6 @@ import os
 import psycopg2
 from instance.config import config
 
-
-rides = {}
-users = {}
-request = {}
-
 def create_tables():
     """ create tables in the PostgreSQL database"""
     commands = ("""
@@ -287,7 +282,6 @@ class Rides:
             output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[2], "time": row[3], "accept": row[4]}
 
         return output
-
 
     def accept_ride_taken(self, ride_id):
         """Driver can accept a ride selected"""
