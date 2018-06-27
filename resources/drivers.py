@@ -17,7 +17,7 @@ class DriverRide(Resource):
 
     @api.expect(ride_model)
     @api.doc(security='apikey')
-    # @driver_required
+    @driver_required
     def post(self):
         """Add a ride endpoint"""
         parser = reqparse.RequestParser()
@@ -45,7 +45,7 @@ class ModifyRide(Resource):
 
     @api.expect(ride_model)
     @api.doc(security='apikey')
-    # @driver_required
+    @driver_required
     def put(self, ride_id):
         """Modifying ride detail"""
 
@@ -67,7 +67,7 @@ class ModifyRide(Resource):
             return res
 
     @api.doc(security='apikey')
-    # @driver_required
+    @driver_required
     def delete(self, ride_id):
         res = rides.delete_ride(ride_id=ride_id)
         return res
