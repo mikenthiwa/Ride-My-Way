@@ -28,14 +28,15 @@ def create_tables():
                        ride_id SERIAL PRIMARY KEY,
                        route VARCHAR(155) NOT NULL,
                        driver VARCHAR(150) NOT NULL,
-                       request BOOLEAN NULL)
+                       time VARCHAR(150) NOT NULL,
+                       request VARCHAR(200) NULL)
         """,
         """ CREATE TABLE request (
                        id SERIAL PRIMARY KEY,
                        username VARCHAR(155) NOT NULL,
                        pickup_point VARCHAR(150) NOT NULL,
                        time VARCHAR(10) NOT NULL,
-                       request BOOLEAN NULL)
+                       accept BOOLEAN NULL)
         """
         )
     conn = None
@@ -67,9 +68,18 @@ class Users:
     """Contains all methods for class users"""
 
     def get_all_user(self):
-        return users
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT email, username, password, is_driver, is_admin from users")
+        rows = cur.fetchall()
 
-    def add_users(self, email, username, password, driver=False, admin=False):
+        output = {}
+        for row in rows:
+            user_email = row[0]
+            output[user_email] = {'username': row[1], 'password': row[2], 'is_driver': row[3], 'is_admin': row[4]}
+        return output
+
+    def add_users(self, email, username, password):
         """Creates new user"""
         conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
         cur = conn.cursor()
@@ -87,16 +97,23 @@ class Users:
 
     def login(self, email, password):
         """Login registered users"""
-        if email in users:
-            if check_password_hash(users[email]['password'], password):
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT email, password, is_driver, is_admin from users")
+        rows = cur.fetchall()
 
-                user_email = email
-                driver = users[email]['is_driver']
-                admin = users[email]['is_admin']
-                token = jwt.encode({'email': user_email, 'is_driver': driver, 'is_admin': admin,
+        output = {}
+        for row in rows:
+            user_email = row[0]
+            output[user_email] = {'password': row[1], 'is_driver': row[2], 'is_admin': row[3]}
+
+        if email in output:
+            if check_password_hash(output[email]['password'], password=password):
+                driver = output[email]['is_driver']
+                admin = output[email]['is_admin']
+                token = jwt.encode({'email': email, 'is_driver': driver, 'is_admin': admin,
                                     'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=12)},
-                                   os.getenv('SECRET_KEY'))
-
+                                     os.getenv('SECRET_KEY'))
                 return {'token': token.decode('UTF-8')}
 
             else:
@@ -104,43 +121,92 @@ class Users:
         else:
             return {"msg": 'invalid email'}, 401
 
+
     def get_a_user(self, email):
         """Get a specific user"""
-        if email not in users:
-            return invalid_email()
-        response = users.get(email)
-        return response
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT email, username, password, is_driver, is_admin from users")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            user_email = row[0]
+            output[user_email] = {'username':row[1], 'password': row[2], 'is_driver': row[3], 'is_admin': row[4]}
+        if email in output:
+            return {'email': email, 'username': output[email]['username'], 'is_driver': output[email]['is_driver'] }
+        return invalid_email()
+
 
     def delete_user(self, email):
         "Delete a user"
-        if email not in users:
-            return invalid_email()
-        del users[email]
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT email, username, password, is_driver, is_admin from users")
+        rows = cur.fetchall()
+
+        output = []
+        for row in rows:
+            user_email = row[0]
+            # output[user_email] = {'username': row[1], 'password': row[2], 'is_driver': row[3], 'is_admin': row[4]}
+            output.append(user_email)
+        if email in output:
+            cur.execute("DELETE from users where email = '" + str(email) + "'")
+            conn.commit()
+        invalid_email()
+
         return {"msg": 'user deleted'}
 
     def modify_username(self, email, username):
         """Modify the username of a specific user"""
-        if email not in users:
+
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT email, username, password, is_driver, is_admin from users")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            user_email = row[0]
+            output[user_email] = {'username': row[1], 'password': row[2], 'is_driver': row[3], 'is_admin': row[4]}
+        if email not in output:
             return invalid_email()
-        user = users.get(email)
-        user['username'] = username
+        cur.execute("UPDATE users set username = '" + username + "' where email = '" + email + "'")
+        conn.commit()
         return {"msg": 'username changed'}
 
     def promote_user(self, email):
         """Make a user an admin"""
-        if email not in users:
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT email, username, password, is_driver, is_admin from users")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            user_email = row[0]
+            output[user_email] = {'username': row[1], 'password': row[2], 'is_driver': row[3], 'is_admin': row[4]}
+        if email not in output:
             return invalid_email()
-        user = users.get(email)
-        user['is_admin'] = True
+        cur.execute("UPDATE users set is_admin = '" + '1' + "' where email = '" + email + "'")
+        conn.commit()
         return {"msg": 'user is admin!'}
 
     def reset_password(self, email, password):
         """Reset the password of specific user"""
-        if email not in users:
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT email, username, password, is_driver, is_admin from users")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            user_email = row[0]
+            output[user_email] = {'username': row[1], 'password': row[2], 'is_driver': row[3], 'is_admin': row[4]}
+        if email not in output:
             return invalid_email()
-        user = users.get(email)
-        hashed_password = generate_password_hash(password=password, method='sha256')
-        user['password'] = hashed_password
+        cur.execute("UPDATE users set password = '" + password + "' where email = '" + email + "'")
+        conn.commit()
         return {"msg": "password changed!"}
 
 
@@ -155,93 +221,172 @@ class Rides:
     @staticmethod
     def get_rides():
         """Gets all rides"""
-        output = []
-        for ride_id in rides:
-            data = {}
-            data["ride_id"] = ride_id
-            data["route"] = rides[ride_id]["Route"]
-            data["driver"] = rides[ride_id]["Driver"]
-            data["time"] = rides[ride_id]["Time"]
-            data["request"] = rides[ride_id]["request"]
-            output.append(data)
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT ride_id, route, driver, time, request from rides")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            ride_id = row[0]
+            output[ride_id] = {"route": row[1], "driver": row[2], "time": row[3], "request": row[4]}
+
         return output
 
     def get_ride(self, ride_id):
         """Get a specific ride"""
-        if ride_id not in rides:
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT ride_id, route, driver, time, request from rides")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            ride_id = row[0]
+            output[ride_id] = {"route": row[1], "driver": row[2], "time": row[3], "request": row[4]}
+        if ride_id not in output:
             return invalid_ride_id()
 
-        ride = rides[ride_id]
+        ride = output[ride_id]
         return ride
 
     @staticmethod
     def add_ride(route, driver, time, request="Request to join this ride"):
         """Add new ride"""
-        new_id = len(rides) + 1
-        rides[new_id] = {"Route": route,
-                         "Driver": driver,
-                         "Time": time,
-                         "request": request}
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+
+        query = "INSERT INTO rides (route, driver, time, request) VALUES " \
+                "('" + route + "', '" + driver + "', '" + time + "', '" + request + "')"
+        cur.execute(query)
+        conn.commit()
+
         return {"msg": "Ride has been successfully added"}
 
-    def request_ride(self, ride_id, username, pickup_point, time, accept="accept", reject="reject"):
+    def request_ride(self, ride_id, username, pickup_point, time):
         """Request a ride"""
-        ride = rides.get(ride_id)
-        ride["request"] = "You have requested to join this ride"
-        request[ride_id] = {"route": rides[ride_id]["Route"],
-                            "username": username,
-                            "pickup_point": pickup_point,
-                            "time": time,
-                            "accept": accept,
-                            "reject": reject}
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+
+        query = "INSERT INTO request (username, pickup_point, time, accept) VALUES " \
+                "('" + username + "', '" + pickup_point + "', '" + time + "', '" + '0' + "')"
+        cur.execute(query)
+        conn.commit()
         return {"msg": "You have successfully requested a ride"}
 
     def get_all_requested_rides(self):
         """Driver can request all rides"""
-        output = []
-        for ride_id in request:
-            data = {}
-            data["route"] = request[ride_id]["route"]
-            data["username"] = request[ride_id]["username"]
-            data["pickup_point"] = request[ride_id]["pickup_point"]
-            data["time"] = request[ride_id]["time"]
-            output.append(data)
+
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT id, username, pickup_point, time, accept from request")
+        rows = cur.fetchall()
+        output = {}
+        for row in rows:
+            request_id = row[0]
+            output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[2], "time": row[3], "accept": row[4]}
+
         return output
 
 
     def accept_ride_taken(self, ride_id):
         """Driver can accept a ride selected"""
-        ride = rides.get(ride_id)
-        ride["accept"] = True
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT id, username, pickup_point, time from request")
+        rows = cur.fetchall()
+        output = {}
+        for row in rows:
+            request_id = row[0]
+            output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[2], "time": row[3]}
+        if ride_id not in output:
+            return invalid_ride_id()
+        cur.execute("UPDATE request set accept = '" + '1' + "' where id = '" + str(ride_id) + "'")
+        conn.commit()
         return {"msg": "You have confirmed ride taken"}
 
 
     @staticmethod
     def modify_driver(ride_id, driver):
         """Changes details of a driver"""
-        ride_details = rides[ride_id]
-        ride_details["Driver"] = driver
+
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT ride_id, route, driver, time, request from rides")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            ride_id = row[0]
+            output[ride_id] = {"driver": row[2]}
+        print(output)
+        ride_details = output.get(ride_id)
+        ride_details["driver"] = driver
+        if ride_id not in output:
+            return invalid_ride_id()
+        cur.execute("UPDATE rides set driver = '" + driver + "' where ride_id = '" + str(ride_id) + "'")
+        conn.commit()
         return {"msg": "Driver has been successfully modified"}
 
     @staticmethod
     def modify_route(ride_id, route):
         """Changes details of a route"""
-        ride_details = rides[ride_id]
-        ride_details["Route"] = route
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT ride_id, route, driver, time, request from rides")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            ride_id = row[0]
+            output[ride_id] = {"route": row[1]}
+
+        ride_details = output.get(ride_id)
+        ride_details["route"] = route
+        if ride_id not in output:
+            return invalid_ride_id()
+        cur.execute("UPDATE rides set route = '" + route + "' where ride_id = '" + str(ride_id) + "'")
+        conn.commit()
         return {"msg": "Route has been successfully modified"}
 
     @staticmethod
     def modify_time(ride_id, time):
         """Changes time of a particular ride"""
-        ride_details = rides[ride_id]
-        ride_details["Time"] = time
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT ride_id, route, driver, time, request from rides")
+        rows = cur.fetchall()
+
+        output = {}
+        for row in rows:
+            ride_id = row[0]
+            output[ride_id] = {"time": row[3]}
+        print(output)
+        ride_details = output.get(ride_id)
+        ride_details["time"] = time
+        if ride_id not in output:
+            return invalid_ride_id()
+        cur.execute("UPDATE rides set time = '" + time + "' where ride_id = '" + str(ride_id) + "'")
+        conn.commit()
         return {"msg": "Ride time has been successfully modified"}
 
     @staticmethod
     def delete_ride(ride_id):
         """Deleting a particular ride"""
-        if ride_id not in rides:
-            return invalid_ride_id()
 
-        del rides[ride_id]
+        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        cur = conn.cursor()
+        cur.execute("SELECT ride_id from rides")
+        rows = cur.fetchall()
+
+        output = []
+        for row in rows:
+            id = row[0]
+            output.append(id)
+
+
+        if ride_id not in output:
+            return invalid_ride_id()
+        cur.execute("DELETE from rides where ride_id = '" + str(ride_id) + "'")
+        conn.commit()
         return {"msg": "Ride has been successfully deleted"}

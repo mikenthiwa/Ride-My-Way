@@ -14,7 +14,7 @@ class RideList(Resource):
     """Contain GET methods"""
 
     @api.doc(security='apikey')
-    @token_required
+    # @token_required
     def get(self):
 
         """Get all rides endpoint"""
@@ -25,7 +25,7 @@ class Ride(Resource):
     """Contains GET method"""
 
     @api.doc(security='apikey')
-    @token_required
+    # @token_required
     def get(self, ride_id):
         """get a ride(passenger)"""
 
@@ -37,7 +37,7 @@ class RequestRide(Resource):
 
     @api.expect(request_model)
     @api.doc(security='apikey')
-    @token_required
+    # @token_required
     def post(self, ride_id):
         """Request ride"""
         parser = reqparse.RequestParser()

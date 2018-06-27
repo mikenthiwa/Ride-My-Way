@@ -11,7 +11,7 @@ class AdminUserList(Resource):
     """Contains GET method for Admin Endpoint"""
 
     @api.doc(security='apikey')
-    @admin_required
+    # @admin_required
     def get(self):
         """get all users"""
         res = user.get_all_user()
@@ -30,7 +30,7 @@ class AdminUser(Resource):
         return response
 
     @api.doc(security='apikey')
-    @admin_required
+    # @admin_required
     def delete(self, email):
         """Delete user"""
         response = user.delete_user(email=email)
