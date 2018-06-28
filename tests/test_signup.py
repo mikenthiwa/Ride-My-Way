@@ -20,7 +20,7 @@ class SignUpEndpoint(ConfigTestCase):
     def test_successful_driver_sign_up(self):
         """Test API can register driver successful"""
 
-        user = {"username": 'Mark', "email": 'mark@gmail.com', "password": '123456789', "is_driver": "True"}
+        user = {"username": 'Mark', "email": 'mark@gmail.com', "password": '123456789', "is_driver": True}
         response = self.client().post('/api/v3/register', data=json.dumps(user), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertIn("You have been successfully added", str(response.data))
