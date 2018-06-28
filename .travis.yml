@@ -8,7 +8,7 @@ install:
 
 before_script:
   - source ./.travis.sh
-  - psql -c 'create database RideMyWaydb;' -U postgres
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 # run scripts
 script:
