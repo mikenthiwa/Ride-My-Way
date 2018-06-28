@@ -108,7 +108,7 @@ class ConfigTestCase(unittest.TestCase):
         with self.app.app_context():
             conn = psycopg2.connect(database="RideMyWaydb", user="postgres", password="bit221510")
             cur = conn.cursor()
-            cur.execute("DROP TABLE users, rides, request;")
+            cur.execute("DROP TABLE users, rides, request")
             conn.commit()
 
 

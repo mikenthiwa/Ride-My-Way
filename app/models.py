@@ -6,7 +6,7 @@ import datetime
 import os
 import psycopg2
 from instance.config import config
-from app import connect
+
 
 def create_tables():
     """ create tables in the PostgreSQL database"""
@@ -255,10 +255,10 @@ class Rides:
 
         output = {}
         for row in rows:
-            ride_id = row[0]
-            output[ride_id] = {"route": row[1], "driver": row[2], "time": row[3], "request": row[4]}
+            id = row[0]
+            output[id] = {"route": row[1], "driver": row[2], "time": row[3], "request": row[4]}
         if ride_id not in output:
-            return invalid_ride_id()
+            return invalid_ride_id(), 404
 
         ride = output[ride_id]
         return ride

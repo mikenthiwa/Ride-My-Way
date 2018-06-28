@@ -16,7 +16,7 @@ class User(Resource):
 
     @api.expect(modify_model)
     @api.doc(security='apikey')
-    # @token_required
+    @token_required
     def put(self, email):
         """modify username"""
 
