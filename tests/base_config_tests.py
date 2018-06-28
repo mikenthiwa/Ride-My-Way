@@ -106,7 +106,7 @@ class ConfigTestCase(unittest.TestCase):
     def tearDown(self):
         """teardown all initialized variables."""
         with self.app.app_context():
-            conn = psycopg2.connect(database="RideMyWaydb", user="postgres", password="bit221510")
+            conn = psycopg2.connect(os.getenv('database'))
             cur = conn.cursor()
             cur.execute("DROP TABLE users, rides, request")
             conn.commit()
