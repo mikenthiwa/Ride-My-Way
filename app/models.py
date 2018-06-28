@@ -1,9 +1,8 @@
 # models.py
-
+import os
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
-import os
 import psycopg2
 from instance.config import config
 
@@ -64,7 +63,7 @@ class Users:
     """Contains all methods for class users"""
 
     def get_all_user(self):
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         # connect()
         cur.execute("SELECT email, username, password, is_driver, is_admin from users")
@@ -78,7 +77,7 @@ class Users:
 
     def add_users(self, email, username, password):
         """Creates new user"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         hashed_password = generate_password_hash(password=password, method='sha256')
 
@@ -94,7 +93,7 @@ class Users:
 
     def add_driver(self, email, username, password):
         """Creates new user"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         hashed_password = generate_password_hash(password=password, method='sha256')
 
@@ -110,7 +109,7 @@ class Users:
 
     def login(self, email, password):
         """Login registered users"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT email, password, is_driver, is_admin from users")
         rows = cur.fetchall()
@@ -137,7 +136,7 @@ class Users:
 
     def get_a_user(self, email):
         """Get a specific user"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT email, username, password, is_driver, is_admin from users")
         rows = cur.fetchall()
@@ -153,7 +152,7 @@ class Users:
 
     def delete_user(self, email):
         "Delete a user"
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT email, username, password, is_driver, is_admin from users")
         rows = cur.fetchall()
@@ -173,7 +172,7 @@ class Users:
     def modify_username(self, email, username):
         """Modify the username of a specific user"""
 
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT email, username, password, is_driver, is_admin from users")
         rows = cur.fetchall()
@@ -190,7 +189,7 @@ class Users:
 
     def promote_user(self, email):
         """Make a user an admin"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT email, username, password, is_driver, is_admin from users")
         rows = cur.fetchall()
@@ -207,7 +206,7 @@ class Users:
 
     def reset_password(self, email, password):
         """Reset the password of specific user"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT email, username, password, is_driver, is_admin from users")
         rows = cur.fetchall()
@@ -234,7 +233,7 @@ class Rides:
     @staticmethod
     def get_rides():
         """Gets all rides"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT ride_id, route, driver, time, request from rides")
         rows = cur.fetchall()
@@ -248,7 +247,7 @@ class Rides:
 
     def get_ride(self, ride_id):
         """Get a specific ride"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT ride_id, route, driver, time, request from rides")
         rows = cur.fetchall()
@@ -266,7 +265,7 @@ class Rides:
     @staticmethod
     def add_ride(route, driver, time, request="Request to join this ride"):
         """Add new ride"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
 
         query = "INSERT INTO rides (route, driver, time, request) VALUES " \
@@ -278,7 +277,7 @@ class Rides:
 
     def request_ride(self, ride_id, username, pickup_point, time):
         """Request a ride"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
 
         query = "INSERT INTO request (username, pickup_point, time, accept) VALUES " \
@@ -290,7 +289,7 @@ class Rides:
     def get_all_requested_rides(self):
         """Driver can request all rides"""
 
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT id, username, pickup_point, time, accept from request")
         rows = cur.fetchall()
@@ -303,7 +302,7 @@ class Rides:
 
     def accept_ride_taken(self, ride_id):
         """Driver can accept a ride selected"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT id, username, pickup_point, time from request")
         rows = cur.fetchall()
@@ -322,7 +321,7 @@ class Rides:
     def modify_driver(ride_id, driver):
         """Changes details of a driver"""
 
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT ride_id, route, driver, time, request from rides")
         rows = cur.fetchall()
@@ -340,7 +339,7 @@ class Rides:
     @staticmethod
     def modify_route(ride_id, route):
         """Changes details of a route"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT ride_id, route from rides")
         rows = cur.fetchall()
@@ -360,7 +359,7 @@ class Rides:
     @staticmethod
     def modify_time(ride_id, time):
         """Changes time of a particular ride"""
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT ride_id, route, driver, time, request from rides")
         rows = cur.fetchall()
@@ -380,7 +379,7 @@ class Rides:
     def delete_ride(ride_id):
         """Deleting a particular ride"""
 
-        conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+        conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
         cur.execute("SELECT ride_id from rides")
         rows = cur.fetchall()

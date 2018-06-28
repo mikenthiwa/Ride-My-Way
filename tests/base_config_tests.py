@@ -24,7 +24,7 @@ class ConfigTestCase(unittest.TestCase):
             create_tables()
 
             # Creating user
-            conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+            conn = psycopg2.connect(os.getenv('database'))
             cur = conn.cursor()
             hashed_password = generate_password_hash("123456789", method='sha256')
 
@@ -34,7 +34,7 @@ class ConfigTestCase(unittest.TestCase):
             conn.commit()
 
             # Creating driver
-            conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+            conn = psycopg2.connect(os.getenv('database'))
             cur = conn.cursor()
             hashed_password = generate_password_hash("123456789", method='sha256')
 
@@ -45,7 +45,7 @@ class ConfigTestCase(unittest.TestCase):
 
             # Creating Admin
 
-            conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+            conn = psycopg2.connect(os.getenv('database'))
             cur = conn.cursor()
             hashed_password = generate_password_hash("admin2018", method='sha256')
 
@@ -55,7 +55,7 @@ class ConfigTestCase(unittest.TestCase):
             conn.commit()
 
             # Add ride
-            conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+            conn = psycopg2.connect(os.getenv('database'))
             cur = conn.cursor()
             route = 'Syo - Nai'
             driver = 'James'
@@ -68,7 +68,7 @@ class ConfigTestCase(unittest.TestCase):
 
             # Add request
 
-            conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
+            conn = psycopg2.connect(os.getenv('database'))
             cur = conn.cursor()
 
             query = "INSERT INTO request (username, pickup_point, time, accept) VALUES " \
