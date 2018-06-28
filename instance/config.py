@@ -38,6 +38,9 @@ class TestingConfig(Config):
     """Configurations for Testing."""
     TESTING = True
     DEBUG = True
+    database = "RideMyWaydb"
+    user = "postgres"
+    password = "bit221510"
 
 
 
