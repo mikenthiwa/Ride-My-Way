@@ -19,6 +19,8 @@ def config(filename='database.ini', section='postgresql'):
 
     return db
 
+# class dev_db:
+#     filename = os.getenv()
 
 
 class Config(object):
@@ -38,6 +40,7 @@ class TestingConfig(Config):
     DEBUG = True
 
 
+
 class ProductionConfig(Config):
     """Configurations for Production."""
     DEBUG = False
@@ -46,4 +49,5 @@ class ProductionConfig(Config):
 
 app_config = {"development": DevelopmentConfig,
               'testing': TestingConfig,
-              'production': ProductionConfig}
+              'production': ProductionConfig,
+              }

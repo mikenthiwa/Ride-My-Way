@@ -6,6 +6,7 @@ import datetime
 import os
 import psycopg2
 from instance.config import config
+from app import connect
 
 def create_tables():
     """ create tables in the PostgreSQL database"""
@@ -65,6 +66,7 @@ class Users:
     def get_all_user(self):
         conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
         cur = conn.cursor()
+        # connect()
         cur.execute("SELECT email, username, password, is_driver, is_admin from users")
         rows = cur.fetchall()
 
@@ -159,14 +161,14 @@ class Users:
         output = []
         for row in rows:
             user_email = row[0]
-            # output[user_email] = {'username': row[1], 'password': row[2], 'is_driver': row[3], 'is_admin': row[4]}
             output.append(user_email)
         if email in output:
             cur.execute("DELETE from users where email = '" + str(email) + "'")
             conn.commit()
-        invalid_email()
+            return {"msg": 'user deleted'}
+        else:
+            return invalid_email()
 
-        return {"msg": 'user deleted'}
 
     def modify_username(self, email, username):
         """Modify the username of a specific user"""
@@ -223,7 +225,7 @@ class Users:
 
 def invalid_ride_id():
     """Returns a message for invalid id"""
-    return {"msg": "invalid ride_id"}
+    return {"msg": "invalid id"}
 
 
 class Rides:
@@ -327,13 +329,10 @@ class Rides:
 
         output = {}
         for row in rows:
-            ride_id = row[0]
-            output[ride_id] = {"driver": row[2]}
-        print(output)
-        ride_details = output.get(ride_id)
-        ride_details["driver"] = driver
+            id = row[0]
+            output[id] = {"driver": row[2]}
         if ride_id not in output:
-            return invalid_ride_id()
+            return invalid_ride_id(), 404
         cur.execute("UPDATE rides set driver = '" + driver + "' where ride_id = '" + str(ride_id) + "'")
         conn.commit()
         return {"msg": "Driver has been successfully modified"}
@@ -343,21 +342,20 @@ class Rides:
         """Changes details of a route"""
         conn = psycopg2.connect("dbname=RideMyWaydb user=postgres password=bit221510")
         cur = conn.cursor()
-        cur.execute("SELECT ride_id, route, driver, time, request from rides")
+        cur.execute("SELECT ride_id, route from rides")
         rows = cur.fetchall()
 
         output = {}
         for row in rows:
-            ride_id = row[0]
-            output[ride_id] = {"route": row[1]}
+            id = row[0]
 
-        ride_details = output.get(ride_id)
-        ride_details["route"] = route
-        if ride_id not in output:
-            return invalid_ride_id()
-        cur.execute("UPDATE rides set route = '" + route + "' where ride_id = '" + str(ride_id) + "'")
-        conn.commit()
-        return {"msg": "Route has been successfully modified"}
+            output[id] = {"route": row[1]}
+
+        if ride_id in output:
+            cur.execute("UPDATE rides set route = '" + route + "' where ride_id = '" + str(ride_id) + "'")
+            conn.commit()
+            return {"msg": "Route has been successfully modified"}
+        return invalid_ride_id(), 404
 
     @staticmethod
     def modify_time(ride_id, time):
@@ -369,13 +367,11 @@ class Rides:
 
         output = {}
         for row in rows:
-            ride_id = row[0]
-            output[ride_id] = {"time": row[3]}
-        print(output)
-        ride_details = output.get(ride_id)
-        ride_details["time"] = time
+            id = row[0]
+            output[id] = {"time": row[3]}
+
         if ride_id not in output:
-            return invalid_ride_id()
+            return invalid_ride_id(), 404
         cur.execute("UPDATE rides set time = '" + time + "' where ride_id = '" + str(ride_id) + "'")
         conn.commit()
         return {"msg": "Ride time has been successfully modified"}

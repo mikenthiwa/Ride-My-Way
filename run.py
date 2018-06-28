@@ -4,6 +4,7 @@ from app import create_app, connect
 
 
 config_name = os.getenv("APP_SETTINGS")
+
 app = create_app(config_name)
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
