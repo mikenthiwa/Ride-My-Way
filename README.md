@@ -1,10 +1,10 @@
 [![Build Status](https://travis-ci.org/mikenthiwa/Ride-My-Way.svg?branch=master)](https://travis-ci.org/mikenthiwa/Ride-My-Way)
-[![Coverage Status](https://coveralls.io/repos/github/mikenthiwa/Ride-My-Way/badge.svg)](https://coveralls.io/github/mikenthiwa/Ride-My-Way)
+[![Coverage Status](https://coveralls.io/repos/github/mikenthiwa/Ride-My-Way/badge.svg?branch=apiv1)](https://coveralls.io/github/mikenthiwa/Ride-My-Way?branch=apiv1)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Ride-My-Way
 
-Ride-my App(apiv1) is a carpooling api that provides drivers with the ability to create ride offers and passengers  to join available ride offers.
+Ride-my App(apiv3) is a carpooling api that provides drivers with the ability to create ride offers and passengers  to join available ride offers.
 
 ***
 
