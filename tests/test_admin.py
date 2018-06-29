@@ -36,6 +36,7 @@ class AdminEndpoint(ConfigTestCase):
         """Test API can delete user"""
 
         response = self.client().delete('/api/v2/admin/users/test_user@gmail.com', headers=self.admin_header)
+        print(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertIn("user deleted", str(response.data))
 

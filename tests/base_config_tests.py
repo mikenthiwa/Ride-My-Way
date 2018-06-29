@@ -46,11 +46,11 @@ class ConfigTestCase(unittest.TestCase):
             admin_response = self.client().post('/api/v2/login', data=json.dumps(test_admin_cred),
                                                content_type='application/json')
 
-            self.user_token_dict = json.loads(user_response.get_data(as_text=True))
+            user_token_dict = json.loads(user_response.get_data(as_text=True))
             driver_token_dict = json.loads(driver_response.get_data(as_text=True))
             admin_token_dict = json.loads(admin_response.get_data(as_text=True))
 
-            user_token = self.user_token_dict["token"]
+            user_token = user_token_dict["token"]
             driver_token = driver_token_dict["token"]
             admin_token = admin_token_dict["token"]
 

@@ -12,8 +12,9 @@ class DriversEndpoint(ConfigTestCase):
 
     def test_add_ride(self):
         """Test API can add ride"""
+        print(self.driver_token)
         ride = {"route": "Komarock-Nairobi", "driver": "Chris", "time": "9:00"}
-        res = self.client().post('/api/v2/driver/rides', data=json.dumps(ride), content_type='application/json',
+        res = self.client().post('/api/v2/driver/rides', data=json.dumps(ride),
                                  headers=self.driver_header)
         self.assertIn("Ride has been successfully added", str(res.data))
         self.assertEqual(res.status_code, 201)
@@ -89,6 +90,7 @@ class DriversEndpoint(ConfigTestCase):
         res = self.client().get('/api/v2/driver/requested', headers=self.driver_header)
         self.assertIn("Syokimau - Nairobi", str(res.data))
         self.assertEqual(res.status_code, 200)
+
 
 
     def test_delete_ride(self):
