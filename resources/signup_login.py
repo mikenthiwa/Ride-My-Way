@@ -12,7 +12,6 @@ model_register = api.model('Sign up', {'username': fields.String(required=True),
                                        'email': fields.String(required=True),
                                        'password': fields.String(required=True),
                                        'is_driver': fields.Boolean(default=False)})
-
 # model for login
 model_login = api.model('Login', {'email': fields.String,
                                   'password': fields.String})
