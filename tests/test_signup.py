@@ -22,6 +22,7 @@ class SignUpEndpoint(ConfigTestCase):
 
         user = {"username": 'Mark', "email": 'mark@gmail.com', "password": '123456789', "is_driver": True}
         response = self.client().post('/api/v3/register', data=json.dumps(user), content_type='application/json')
+        print(response.data)
         self.assertEqual(response.status_code, 201)
         self.assertIn("You have been successfully added", str(response.data))
 
