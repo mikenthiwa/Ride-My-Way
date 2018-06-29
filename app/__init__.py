@@ -25,7 +25,7 @@ def create_app(config_name):
               title='Ride_My_Way',
               authorizations=authorizations,
               version='3.0',
-              doc='/api/v1/documentation',
+              doc='/api/v3/documentation',
               description='Ride-My-Way is a carpooling application that provides'
                           ' drivers with the ability to create ride'
                           ' offers and passengers to join available ride offers.')
