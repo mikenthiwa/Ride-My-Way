@@ -27,6 +27,7 @@ Open the project using your ide
 * flask-restplus
 * Postman
 * Browser e.g Chrome, firefox, safari
+* Postgres
 
 ***
 
@@ -87,12 +88,14 @@ Endpoint available for this api are shown in the table below:
    GET        |  /api/v3/admin/users                 | Get all users                         |
    PATCH      |  /api/v3/admin/users/<int:user_id>   | Promote users                         | email required
    
-   0
+  
 ````
 Run app
 
-```bash
-
+```
+export settings:
+export SECRET_KEY=!@#$%^&*
+export database=dbname=RideMyWaydb
 
 ```
 
@@ -116,7 +119,7 @@ pytest
 
 ## Heroku
 
-https://ridemywayapiv1.herokuapp.com/api/v1/documentation
+https://ridemywayapiv1.herokuapp.com/api/v3/documentation
 ***
 
 ## Versioning
