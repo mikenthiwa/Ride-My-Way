@@ -68,21 +68,26 @@ Endpoint available for this api are shown in the table below:
 |Requests     |   EndPoint                           | Functionality                         | Fields
 |:-----------:|:-------------------------------------:---------------------------------------:------------
    GET        |  /api/v3/rides                       | Get all Rides                         | 
-   GET        |  /api/v3/rides/{rideId}              | Get a specific ride                   | id required                     
-   DELETE     |  /api/v3/driver/rideId               | Delete ride                           | id required 
-   POST       |  /api/v3/driver/rides                | Add a ride                            | "route", "time", "driver", 
-                                                                                                e.g {"route": "Nairobi-Thika", "driver": "Reg Nduku", "time": 8: 00}
-   PATCH      |  /api/v3/rides/{rideId}/Request      | Request to join a ride                | 
+   GET        |  /api/v3/rides/{rideId}              | Get a specific ride                   | id required(int)                     
+   DELETE     |  /api/v3/driver/rideId               | Delete ride                           | id required (int)
+   POST       |  /api/v3/driver/rides                | Add a ride                            | e.g {"route": "Nairobi-Thika", "driver": "Reg Nduku", "time": 8:00}                                                                                               
+   PATCH      |  /api/v3/rides/{rideId}/Request      | Request to join a ride                | e.g {"username": "james", "pick_point": "syokimau", "time": 8:00 }
    PATCH      |  /api/v3/driver/rides/rideId/Accept  | Accept the request passengers request |  
-   PUT        |  /api/v3/driver/rides/rideId         | Modify ride details
-   POST       |  /api/v3/register                    | Register users                        | e.g {"username": "test_user", "email":test_user@gmail.com, "password": "12345"}
-                                                                                               e.g {"username": "test_user", "email":test_user@gmail.com, "password": "12345", "driver": true}
+   PUT        |  /api/v3/driver/rides/rideId         | Modify ride details                   |
+                                                                                             | if changing route e.g {"route": "Naivasha - Nakuru"}
+                                                                                                    "       driver   {"driver": "Kevin Auri"}
+                                                                                                    "        time    {"time": "12:00"}
+                                                                                                                     
+   POST       |  /api/v3/register                    | Register users                        | e.g register as a passanger {"username": "test_user", "email":test_user@gmail.com, "password": "12345"}
+                                                                                               e.g register as driver {"username": "test_user", "email":test_user@gmail.com, "password": "12345", "driver": true}
                                                                                                
    POST       |  /api/v3/login                       | Login user                            | e.g {"email: "test_user@gmail.com", "password": "1234"}
    PUT        |  /api/v3/auth/user/email             | Reset password                        | e.g  /api/v3/auth/user/email 
    PUT        |  /api/v3/auth/user/email             | Reset username                        | e.g  /api/v3/auth/user/email 
-   GET        |  /api/v3/admin/users                 | Get all users
-   PATCH      |  /api/v3/admin/users/<int:user_id>   | Promote users
+   GET        |  /api/v3/admin/users                 | Get all users                         |
+   PATCH      |  /api/v3/admin/users/<int:user_id>   | Promote users                         |email required
+   
+   0
 ````
 Run app
 
