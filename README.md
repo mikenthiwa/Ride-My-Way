@@ -65,22 +65,32 @@ Application used for testing endpoint. <br>
 Endpoint available for this api are shown in the table below:
 ````
 
-|Requests     |   EndPoint                           | Functionality
-|:-----------:|:-------------------------------------:--------------:
-   GET        |  /api/v1/rides                       | Get all Rides 
-   GET        |  /api/vi/rides/{rideId}              | Get a specific ride
-   DELETE     |  /api/v1/driver/rideId               | Delete ride          
-   POST       |  /api/v1/driver/rides                | Add a ride                  
-   PATCH      |  /api/v1/rides/{rideId}/Request      | Request to join a ride
-   PATCH      |  /api/v1/driver/rides/rideId/Accept  | Accept the request passengers request
-   PUT        |  /api/vi/driver/rides/rideId         | Modify ride details
-   POST       |  /api/v1/register                    | Register users
-   POST       |  /api/v1/login                       | Login user
-   PUT        |  /api/v1/auth/user/email             | Reset password
-   PUT        |  /api/vi/auth/user/email             | Reset username                       
-   GET        |  /api/v1/admin/users                 | Get all users
-   PATCH      |  /api/v1/admin/users/<int:user_id>   | Promote users
+|Requests     |   EndPoint                           | Functionality                         | Fields
+|:-----------:|:-------------------------------------:---------------------------------------:------------
+   GET        |  /api/v3/rides                       | Get all Rides                         | 
+   GET        |  /api/v3/rides/{rideId}              | Get a specific ride                   | id required                     
+   DELETE     |  /api/v3/driver/rideId               | Delete ride                           | id required 
+   POST       |  /api/v3/driver/rides                | Add a ride                            | "route", "time", "driver", 
+                                                                                                e.g {"route": "Nairobi-Thika", "driver": "Reg Nduku", "time": 8: 00}
+   PATCH      |  /api/v3/rides/{rideId}/Request      | Request to join a ride                | 
+   PATCH      |  /api/v3/driver/rides/rideId/Accept  | Accept the request passengers request |  
+   PUT        |  /api/v3/driver/rides/rideId         | Modify ride details
+   POST       |  /api/v3/register                    | Register users                        | e.g {"username": "test_user", "email":test_user@gmail.com, "password": "12345"}
+                                                                                               e.g {"username": "test_user", "email":test_user@gmail.com, "password": "12345", "driver": true}
+                                                                                               
+   POST       |  /api/v3/login                       | Login user                            | e.g {"email: "test_user@gmail.com", "password": "1234"}
+   PUT        |  /api/v3/auth/user/email             | Reset password                        | e.g  /api/v3/auth/user/email 
+   PUT        |  /api/v3/auth/user/email             | Reset username                        | e.g  /api/v3/auth/user/email 
+   GET        |  /api/v3/admin/users                 | Get all users
+   PATCH      |  /api/v3/admin/users/<int:user_id>   | Promote users
 ````
+Run app
+
+```bash
+
+
+```
+
 
 ***
 
