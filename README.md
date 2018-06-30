@@ -85,7 +85,7 @@ Endpoint available for this api are shown in the table below:
    PUT        |  /api/v3/auth/user/email             | Reset password                        | e.g  /api/v3/auth/user/email 
    PUT        |  /api/v3/auth/user/email             | Reset username                        | e.g  /api/v3/auth/user/email 
    GET        |  /api/v3/admin/users                 | Get all users                         |
-   PATCH      |  /api/v3/admin/users/<int:user_id>   | Promote users                         |email required
+   PATCH      |  /api/v3/admin/users/<int:user_id>   | Promote users                         | email required
    
    0
 ````
