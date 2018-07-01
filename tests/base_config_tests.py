@@ -5,7 +5,7 @@ import psycopg2
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from app import create_app, connect
+from app import create_app
 from app.models import create_tables
 
 
@@ -18,20 +18,21 @@ class ConfigTestCase(unittest.TestCase):
 
         self.app = create_app(config_name="testing")
         self.client = self.app.test_client
+        self.conn = psycopg2.connect(os.getenv('database'))
+        self.cur = self.conn.cursor()
 
         with self.app.app_context():
-            connect()
+            # connect()
             create_tables()
 
             # Creating user
-            conn = psycopg2.connect(os.getenv('database'))
-            cur = conn.cursor()
+
             hashed_password = generate_password_hash("123456789", method='sha256')
 
             query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
                     "('test_user@gmail.com', 'test_user', '" + hashed_password + "', '" + '0' + "','" + '0' + "' )"
-            cur.execute(query)
-            conn.commit()
+            self.cur.execute(query)
+            self.conn.commit()
 
             # Creating driver
             conn = psycopg2.connect(os.getenv('database'))

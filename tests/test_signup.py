@@ -20,11 +20,10 @@ class SignUpEndpoint(ConfigTestCase):
     def test_successful_driver_sign_up(self):
         """Test API can register driver successful"""
 
-        user = {"username": 'Mark', "email": 'mark@gmail.com', "password": '123456789', "is_driver": True}
-        response = self.client().post('/api/v3/register', data=json.dumps(user), content_type='application/json')
-        print(response.data)
-        self.assertEqual(response.status_code, 201)
-        self.assertIn("You have been successfully added", str(response.data))
+        driver = {"username": 'Mark', "email": 'mark@gmail.com', "password": '123456789', "is_driver": "True"}
+        driver_response = self.client().post('/api/v3/register', data=json.dumps(driver), content_type='application/json')
+        self.assertEqual(driver_response.status_code, 201)
+        self.assertIn("You have been successfully added", str(driver_response.data))
 
     def test_empty_field(self):
         """Test API for empty field"""

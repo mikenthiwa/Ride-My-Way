@@ -44,11 +44,11 @@ class Register(Resource):
             return {"msg": "Field cannot be empty"}
 
         if driver == "True":
-            res = user.add_driver(email=email, username=username, password=password)
-            return res, 201
+            driver_res = user.add_driver(email=email, username=username, password=password)
+            return driver_res, 201
 
-        driver_res = user.add_users(email=email, username=username, password=password)
-        return driver_res, 201
+        user_res = user.add_users(email=email, username=username, password=password)
+        return user_res, 201
 
 
 

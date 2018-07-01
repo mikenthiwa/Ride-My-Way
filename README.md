@@ -90,7 +90,10 @@ Endpoint available for this api are shown in the table below:
    
   
 ````
-Run app
+Run application on postman
+````
+http://127.0.0.1:5000 
+````
 
 ```
 export settings:
@@ -123,7 +126,7 @@ https://ridemywayapiv1.herokuapp.com/api/v3/documentation
 ***
 
 ## Versioning
-Most recent version: version 1
+Most recent version: version 3
 
 ***
 
