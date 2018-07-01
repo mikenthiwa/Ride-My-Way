@@ -62,7 +62,7 @@ Some of the third party modules that will be installed are:
 ***
 
 ### Postman
-Application used for testing endpoint. <br>
+Sign up and login to access features. <br>
 Endpoint available for this api are shown in the table below:
 ````
 
