@@ -102,7 +102,6 @@ export database=dbname=RideMyWaydb
 
 ```
 
-
 ***
 
 ## Running test
