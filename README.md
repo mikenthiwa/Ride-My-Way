@@ -94,7 +94,7 @@ Run application on postman
 ````
 http://127.0.0.1:5000 
 ````
-
+***
 ```
 export settings:
 export SECRET_KEY=!@#$%^&*
