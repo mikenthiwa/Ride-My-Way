@@ -12,7 +12,7 @@ Ride-my App(apiv3) is a carpooling api that provides drivers with the ability to
 
 ## Getting Started
 ```
-Go to https://github.com/mikenthiwa/Ride-My-Way.git 
+Go to https://github.com/mikenthiwa/Ride-My-Way.git
 Download or clone the repository to your local machine. 
 Open the project using your ide
 ```
@@ -100,6 +100,7 @@ export database=dbname=RideMyWaydb
 ```
 
 Run application on postman
+
 ```
 http://127.0.0.1:5000 
 ```
