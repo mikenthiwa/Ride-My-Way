@@ -90,17 +90,23 @@ Endpoint available for this api are shown in the table below:
    
   
 ````
-Run application on postman
-````
-http://127.0.0.1:5000 
-````
-***
+
+Environment variable
 ```
 export settings:
 export SECRET_KEY=!@#$%^&*
 export database=dbname=RideMyWaydb
 
 ```
+
+Run application on postman
+```
+http://127.0.0.1:5000 
+```
+
+````
+***
+
 
 ***
 
@@ -118,6 +124,8 @@ pytest
 * flask-restplus
 
 ***
+
+
 
 ## Heroku
 

@@ -32,6 +32,12 @@ class SignUpEndpoint(ConfigTestCase):
         response = self.client().post('/api/v3/register', data=json.dumps(user), content_type='application/json')
         self.assertIn("Field cannot be empty", str(response.data))
 
+    def test_available_email(self):
+        """Test API can detect"""
+        user = {"username": "driver", "email": "test_driver@gmail.com", "password": '123456789'}
+        response = self.client().post('/api/v3/register', data=json.dumps(user), content_type='application/json')
+        self.assertIn("email already exist", str(response.data))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -28,5 +28,7 @@ class UserEndpoint(ConfigTestCase):
                                  headers=self.user_header, content_type='application/json')
         self.assertIn("Email is not available", str(res1.data))
 
+
+
 if __name__ == '__main__':
     unittest.main()
