@@ -104,12 +104,6 @@ Run application on postman
 http://127.0.0.1:5000 
 ```
 
-````
-***
-
-
-***
-
 ## Running test
 ````
 coverage run -m unittest
