@@ -17,7 +17,7 @@ def create_tables():
             username VARCHAR(100) NOT NULL,
             password VARCHAR(450) NOT NULL,
             is_driver BOOLEAN NULL,
-            is_admin BOOLEAN NULL )
+            is_admin BOOLEAN NULL)
         """,
 
         """ CREATE TABLE rides (
@@ -256,7 +256,7 @@ class Rides:
         output = {}
         for row in rows:
             ride_id = row[0]
-            output[ride_id] = {"route": row[1], "driver": row[2], "time": row[3], "request": row[4]}
+            output[ride_id] = {"route": row[1], "time": row[2], "driver": row[3], "request": row[4]}
 
         return output
 
@@ -279,15 +279,18 @@ class Rides:
         return ride
 
     @staticmethod
-    def add_ride(route, driver, time, request="Request to join this ride"):
+    def add_ride(route, time, requests="Request to join this ride"):
         """Add new ride"""
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
+        token = request.headers.get('x-access-token')
+        data = jwt.decode(token, Config.SECRET)
         query = "INSERT INTO rides (route, driver, time, request) VALUES " \
-                "('" + route + "', '" + driver + "', '" + time + "', '" + request + "')"
+                "('" + route + "', '" + time + "', '" + data[
+                    'username'] + "', '" + requests + "')"
+
         cur.execute(query)
         conn.commit()
-
         return {"msg": "Ride has been successfully added"}
 
     def request_ride(self, ride_id, pickup_point):
@@ -301,7 +304,7 @@ class Rides:
         query = "INSERT INTO request (username, pickup_point, time, accept) VALUES " \
                 "('" + str(data['username']) + "', '" + str(ride_id) + "', '" + pickup_point + "', '" + joined +"')"
         cur.execute(query)
-
+        conn.commit()
         conn.close()
         return {"msg": "You have successfully requested a ride"}
 
@@ -315,7 +318,7 @@ class Rides:
         output = {}
         for row in rows:
             request_id = row[0]
-            output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[2], "time": row[3], "accept": row[4]}
+            output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[3]}
 
         return output
 
