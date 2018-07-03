@@ -1,0 +1,16 @@
+venv/*
+env.bat
+.idea/
+app/__pycache__/
+resources/__pycache__/
+tests/__pycache__/
+.pytest_cache/
+__pycache__/
+htmlcov/
+migrations
+instance/__pycache__/__init__.cpython-36.pyc
+instance/__pycache__/config.cpython-36.pyc
+instance/config.py
+instance/__pycache__/config.cpython-36.pyc
+
+
