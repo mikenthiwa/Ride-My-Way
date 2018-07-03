@@ -6,6 +6,9 @@ from flask import request
 import datetime
 import psycopg2
 from instance.config import config, Config
+from resources.auth import data
+
+
 
 
 def create_tables():
@@ -286,8 +289,8 @@ class Rides:
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
 
-        token = request.headers['x-access-token']
-        data = jwt.decode(token, Config.SECRET)
+
+        print(data)
         query = "INSERT INTO rides (user_id, route, driver, time, request) VALUES " \
                 "('" + str(data['user_id']) + "', '" + route + "', '" + time + "', '" + data['username'] + "', '" + requests + "')"
 
@@ -317,13 +320,13 @@ class Rides:
         cur = conn.cursor()
         cur.execute("SELECT * from request")
         rows = cur.fetchall()
-        # output = {}
-        # for row in rows:
-        #     request_id = row[0]
-        #     output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[2], "time": row[3], "accept": row[4]}
+        output = {}
+        for row in rows:
+            request_id = row[0]
+            output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[2], "time": row[3], "accept": row[4]}
 
-        # return output
-        print(rows)
+        return output
+        # print(rows)
 
 
     def accept_ride_taken(self, ride_id):

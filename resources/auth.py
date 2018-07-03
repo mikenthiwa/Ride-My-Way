@@ -5,6 +5,7 @@ import jwt
 from instance.config import Config
 
 
+
 def token_required(f):
     """Checks for authenticated users with valid token in the header"""
 
@@ -88,3 +89,6 @@ def admin_required(f):
         return f(*args, **kwargs)
 
     return decorated
+
+token = request.headers.get('x-access-token')
+data = jwt.decode(token, Config.SECRET)
