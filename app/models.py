@@ -2,9 +2,10 @@
 import os
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
+from app import request
 import datetime
 import psycopg2
-from instance.config import config
+from instance.config import config, Config
 
 
 def create_tables():
@@ -31,7 +32,7 @@ def create_tables():
                        username VARCHAR(155) NOT NULL,
                        pickup_point VARCHAR(150) NOT NULL,
                        time VARCHAR(10) NOT NULL,
-                       accept BOOLEAN NULL)
+                       accept VARCHAR(200))
         """
         )
     conn = None
@@ -61,7 +62,6 @@ def invalid_email():
 #
 # conn = psycopg2.connect(os.getenv('database'))
 # cur = conn.cursor()
-
 
 
 class Users(object):
@@ -126,30 +126,20 @@ class Users(object):
 
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
-        cur.execute("SELECT email, password, is_driver, is_admin from users")
-        rows = cur.fetchall()
-        output = {}
-        for row in rows:
-            user_email = row[0]
-            output[user_email] = {'password': row[1], 'is_driver': row[2], 'is_admin': row[3]}
 
-        if email in output:
-            if check_password_hash(output[email]['password'], password=password):
-                driver = output[email]['is_driver']
-                admin = output[email]['is_admin']
-                token = jwt.encode({'email': email, 'is_driver': driver, 'is_admin': admin,
-                                    'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=12)},
-                                     os.getenv('SECRET_KEY'))
-                # self.conn.close()
-                return {'token': token.decode('UTF-8')}
-
-            else:
-                # self.conn.close()
-                return {"msg": "password do not match"}, 401
-        else:
-            # self.conn.close()
-
+        cur.execute(
+            "SELECT email, user_id, username, password, is_driver, is_admin from users where email='{}'".format(email))
+        rows = cur.fetchone()
+        if rows is None:
             return {"msg": 'invalid email'}, 401
+        if not check_password_hash(rows[3], password=password):
+            return {"msg": "password do not match"}, 401
+
+        token = jwt.encode(
+            {'email': rows[0], 'user_id': rows[1], 'username': rows[2], 'is_driver': rows[4], 'is_admin': rows[5],
+             'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=12)}, os.getenv('SECRET_KEY'))
+
+        return {'token': token.decode('UTF-8')}
 
 
     def get_a_user(self, email):
@@ -300,13 +290,16 @@ class Rides:
 
         return {"msg": "Ride has been successfully added"}
 
-    def request_ride(self, ride_id, username, pickup_point, time):
+    def request_ride(self, ride_id, pickup_point):
         """Request a ride"""
 
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
+        token = request.headers.get('x-access-token')
+        data = jwt.decode(token, Config.SECRET)
+        joined = "you have joined this ride"
         query = "INSERT INTO request (username, pickup_point, time, accept) VALUES " \
-                "('" + username + "', '" + pickup_point + "', '" + time + "', '" + '0' + "')"
+                "('" + str(data['username']) + "', '" + str(ride_id) + "', '" + pickup_point + "', '" + joined +"')"
         cur.execute(query)
 
         conn.close()

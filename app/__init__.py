@@ -1,6 +1,6 @@
 # app/__init__.py
 
-from flask import Flask
+from flask import Flask, request
 from flask_restplus import Api
 import psycopg2
 
