@@ -2,9 +2,10 @@
 import os
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import request
 import datetime
 import psycopg2
-from instance.config import config
+from instance.config import config, Config
 
 
 def create_tables():
@@ -16,11 +17,12 @@ def create_tables():
             username VARCHAR(100) NOT NULL,
             password VARCHAR(450) NOT NULL,
             is_driver BOOLEAN NULL,
-            is_admin BOOLEAN NULL )
+            is_admin BOOLEAN NULL)
         """,
 
         """ CREATE TABLE rides (
                        ride_id SERIAL PRIMARY KEY,
+                       user_id INTEGER NOT NULL references users(user_id) on delete cascade,
                        route VARCHAR(155) NOT NULL,
                        driver VARCHAR(150) NOT NULL,
                        time VARCHAR(150) NOT NULL,
@@ -29,9 +31,9 @@ def create_tables():
         """ CREATE TABLE request (
                        id SERIAL PRIMARY KEY,
                        username VARCHAR(155) NOT NULL,
+                       ride_id INTEGER NOT NULL references rides(ride_id) on delete cascade,
                        pickup_point VARCHAR(150) NOT NULL,
-                       time VARCHAR(10) NOT NULL,
-                       accept BOOLEAN NULL)
+                       accept VARCHAR(200))
         """
         )
     conn = None
@@ -98,7 +100,7 @@ class Users(object):
 
         hashed_password = generate_password_hash(password=password, method='sha256')
 
-        query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
+        query = "INSERT INTO users (user_id, email, username, password, is_driver, is_admin) VALUES " \
                 "('" + email + "', '" + username + "', '" + hashed_password + "', '" + '0' +"','" + '0' +"' )"
         cur.execute(query)
         conn.commit()
@@ -126,30 +128,20 @@ class Users(object):
 
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
-        cur.execute("SELECT email, password, is_driver, is_admin from users")
-        rows = cur.fetchall()
-        output = {}
-        for row in rows:
-            user_email = row[0]
-            output[user_email] = {'password': row[1], 'is_driver': row[2], 'is_admin': row[3]}
 
-        if email in output:
-            if check_password_hash(output[email]['password'], password=password):
-                driver = output[email]['is_driver']
-                admin = output[email]['is_admin']
-                token = jwt.encode({'email': email, 'is_driver': driver, 'is_admin': admin,
-                                    'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=12)},
-                                     os.getenv('SECRET_KEY'))
-                # self.conn.close()
-                return {'token': token.decode('UTF-8')}
-
-            else:
-                # self.conn.close()
-                return {"msg": "password do not match"}, 401
-        else:
-            # self.conn.close()
-
+        cur.execute("SELECT email, user_id, username, password, is_driver, is_admin from users where email='{}'".format(email))
+        rows = cur.fetchone()
+        if rows is None:
             return {"msg": 'invalid email'}, 401
+        if not check_password_hash(rows[3], password=password):
+            return {"msg": "password do not match"}, 401
+
+        token = jwt.encode({'email': rows[0], 'user_id': rows[1], 'username': rows[2], 'is_driver': rows[4], 'is_admin': rows[5],
+                            'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=12)},
+                             os.getenv('SECRET_KEY'))
+
+        return {'token': token.decode('UTF-8')}
+
 
 
     def get_a_user(self, email):
@@ -266,7 +258,7 @@ class Rides:
         output = {}
         for row in rows:
             ride_id = row[0]
-            output[ride_id] = {"route": row[1], "driver": row[2], "time": row[3], "request": row[4]}
+            output[ride_id] = {"route": row[1], "time": row[2], "driver": row[3], "request": row[4]}
 
         return output
 
@@ -289,24 +281,30 @@ class Rides:
         return ride
 
     @staticmethod
-    def add_ride(route, driver, time, request="Request to join this ride"):
+    def add_ride(route, time, requests="Request to join this ride"):
         """Add new ride"""
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
-        query = "INSERT INTO rides (route, driver, time, request) VALUES " \
-                "('" + route + "', '" + driver + "', '" + time + "', '" + request + "')"
+
+        token = request.headers['x-access-token']
+        data = jwt.decode(token, Config.SECRET)
+        query = "INSERT INTO rides (user_id, route, driver, time, request) VALUES " \
+                "('" + str(data['user_id']) + "', '" + route + "', '" + time + "', '" + data['username'] + "', '" + requests + "')"
+
         cur.execute(query)
         conn.commit()
-
         return {"msg": "Ride has been successfully added"}
 
-    def request_ride(self, ride_id, username, pickup_point, time):
+    def request_ride(self, ride_id, pickup_point):
         """Request a ride"""
 
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
-        query = "INSERT INTO request (username, pickup_point, time, accept) VALUES " \
-                "('" + username + "', '" + pickup_point + "', '" + time + "', '" + '0' + "')"
+        token = request.headers['x-access-token']
+        data = jwt.decode(token, Config.SECRET)
+
+        joined = "joined"
+        query = "INSERT INTO request (username, ride_id, pickup_point, accept) VALUES ('" + str(data['username']) + "', '" + str(ride_id) + "', '" + pickup_point + "', '" + joined +"')"
         cur.execute(query)
 
         conn.close()
@@ -317,14 +315,16 @@ class Rides:
 
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
-        cur.execute("SELECT id, username, pickup_point, time, accept from request")
+        cur.execute("SELECT * from request")
         rows = cur.fetchall()
-        output = {}
-        for row in rows:
-            request_id = row[0]
-            output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[2], "time": row[3], "accept": row[4]}
+        # output = {}
+        # for row in rows:
+        #     request_id = row[0]
+        #     output[request_id] = {"ride_id": row[0], "username": row[1], "pickup_point": row[2], "time": row[3], "accept": row[4]}
 
-        return output
+        # return output
+        print(rows)
+
 
     def accept_ride_taken(self, ride_id):
         """Driver can accept a ride selected"""

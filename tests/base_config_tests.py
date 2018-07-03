@@ -2,13 +2,14 @@ import unittest
 import sys  # fix import errors
 import os
 import psycopg2
+import jwt
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app import create_app
-from app.models import create_tables
+from app.models import create_tables, Rides
 
-
+ride = Rides()
 
 class ConfigTestCase(unittest.TestCase):
     """This class represents the base configurations for all tests"""
@@ -56,16 +57,19 @@ class ConfigTestCase(unittest.TestCase):
             conn.commit()
 
             # Add ride
-            conn = psycopg2.connect(os.getenv('database'))
-            cur = conn.cursor()
-            route = 'Syo - Nai'
-            driver = 'James'
-            time = '10:00'
-            request = 'Request to join this ride'
-            query = "INSERT INTO rides (route, driver, time, request) VALUES " \
-                    "('" + route + "', '" + driver + "', '" + time + "', '" + request + "')"
-            cur.execute(query)
-            conn.commit()
+            # conn = psycopg2.connect(os.getenv('database'))
+            # cur = conn.cursor()
+            # route = 'Syo - Nai'
+            # driver = 'James'
+            # time = '10:00'
+            # request = 'Request to join this ride'
+            # token = jwt.encode()
+            # query = "INSERT INTO rides (route, user_id, driver, time, request) VALUES " \
+            #         "('" + route + "', '" + driver + "', '" + time + "', '" + request + "')"
+            # cur.execute(query)
+            # conn.commit()
+
+            ride.add_ride(route='Syok - Nai')
 
             # Add request
 

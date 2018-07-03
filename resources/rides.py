@@ -6,9 +6,7 @@ rides = Rides()
 
 api = Namespace("Rides",  description="Passenger related operations")
 
-request_model = api.model('Request Model', {'username': fields.String,
-                                            "pickup_point": fields.String,
-                                            "time": fields.String})
+request_model = api.model('Request Model', {"pickup_point": fields.String})
 
 class RideList(Resource):
     """Contain GET methods"""
@@ -41,16 +39,14 @@ class RequestRide(Resource):
     def post(self, ride_id):
         """Request ride"""
         parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True, type=str, help='Username is required', location=['json'])
         parser.add_argument('pickup_point', required=True, type=str, help='Pickup_point is required', location=['json'])
-        parser.add_argument('time', required=True, type=str, help='Pickup_point is required', location=['json'])
+
 
         args = parser.parse_args()
-        username = args['username']
         pickup_point = args['pickup_point']
-        time = args['time']
 
-        res = rides.request_ride(ride_id=ride_id, username=username, pickup_point=pickup_point, time=time)
+
+        res = rides.request_ride(ride_id=ride_id, pickup_point=pickup_point)
         return res
 
 
