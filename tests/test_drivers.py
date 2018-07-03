@@ -35,7 +35,7 @@ class DriversEndpoint(ConfigTestCase):
     def test_accept_ride(self):
         """Test API driver can accept ride"""
 
-        res = self.client().patch('/api/v3/driver/rides/1/accept', headers=self.driver_header)
+        res = self.client().put('/api/v3/driver/rides/1/accept', headers=self.driver_header)
         self.assertIn("You have confirmed ride taken", str(res.data))
         self.assertEqual(res.status_code, 200)
 

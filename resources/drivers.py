@@ -77,7 +77,7 @@ class AcceptRide(Resource):
 
     @api.doc(security='apikey')
     # @driver_required
-    def patch(self, ride_id):
+    def put(self, ride_id):
         """Driver accepts ride taken by passenger"""
 
         res = rides.accept_ride_taken(ride_id=ride_id)
