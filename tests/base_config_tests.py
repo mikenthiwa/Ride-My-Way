@@ -73,7 +73,7 @@ class ConfigTestCase(unittest.TestCase):
             cur = conn.cursor()
 
             query = "INSERT INTO request (username, pickup_point, time, accept) VALUES " \
-                    "('Teddy Kavoo', ' Vota ', '8:00 ', '" + '0' + "')"
+                    "('Teddy Kavoo', 'Vota', '8:00', 'you have joined this ride')"
             cur.execute(query)
             conn.commit()
 
