@@ -59,10 +59,6 @@ def create_tables():
 def invalid_email():
     return {"msg": "Email is not available"}
 
-#
-# conn = psycopg2.connect(os.getenv('database'))
-# cur = conn.cursor()
-
 
 class Users(object):
     """Contains all methods for class users"""
