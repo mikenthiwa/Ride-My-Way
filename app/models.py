@@ -60,13 +60,17 @@ def invalid_email():
     return {"msg": "Email is not available"}
 
 
-class Users(object):
+class Users:
     """Contains all methods for class users"""
-    def __init__(self):
-        self.conn = psycopg2.connect(os.getenv('database'))
-        self.cur = self.conn.cursor()
+    def __init__(self, username, email, password, is_driver=False, is_admin=False):
+        self.username = username
+        self.email = email
+        self.password = generate_password_hash(password, method='sha256')
+        self.is_driver = is_driver
+        self.is_admin = is_admin
 
-    def get_all_user(self):
+    @staticmethod
+    def get_all_user():
         """Get all users"""
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
@@ -79,45 +83,64 @@ class Users(object):
             conn.close()
         return output
 
-    def add_users(self, email, username, password):
+
+    def add_users(self):
         """Creates new user"""
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
-        cur.execute("SELECT email from users")
-        rows = cur.fetchall()
-        output = []
-        for row in rows:
-            user_email = row[0]
-            output.append(user_email)
-        if email in output:
-            return {"msg": "email already exist"}
+        cur.execute("SELECT * from users where email='{}'".format(self.email))
+        cur.execute("SELECT * from users where username='{}'".format(self.username))
 
-        hashed_password = generate_password_hash(password=password, method='sha256')
+        rows = cur.fetchone()
+        if rows is None:
+            query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
+                    "('" + self.email + "', '" + self.username + "', '" + self.password + "', '" + '0' + "', '"+ '0' +"')"
+            cur.execute(query)
+            conn.commit()
+            conn.close()
 
-        query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
-                "('" + email + "', '" + username + "', '" + hashed_password + "', '" + '0' +"','" + '0' +"' )"
-        cur.execute(query)
-        conn.commit()
-        conn.close()
+            return {"msg": "You have been successfully added"}
+        return {"msg": 'email is already available'}, 401
 
 
-        return {"msg": "You have been successfully added"}
-
-    def add_driver(self, email, username, password):
+    def add_driver(self):
         """Creates new user"""
 
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
-        hashed_password = generate_password_hash(password=password, method='sha256')
+        cur.execute("SELECT * from users where email='{}'".format(self.email))
+        rows = cur.fetchone()
+        if rows is None:
+            query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
+                    "('" + self.email + "', '" + self.username + "', '" + self.password + "', '" + '1' + "', '" + '0' + "')"
+            cur.execute(query)
+            conn.commit()
+            conn.close()
+            return {"msg": "You have been successfully added"}, 201
 
-        query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
-                "('" + email + "', '" + username + "', '" + hashed_password + "', '" + '1' +"','" + '0' +"' )"
-        cur.execute(query)
-        conn.commit()
+        return {"msg": 'email is already available'}, 401
 
-        return {"msg": "You have been successfully added"}
+    def add_admin(self):
+        """Creates new user"""
 
-    def login(self, email, password):
+        conn = psycopg2.connect(os.getenv('database'))
+        cur = conn.cursor()
+        cur.execute("SELECT * from users where email='{}'".format(self.email))
+        rows = cur.fetchone()
+        if rows is None:
+            query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
+                    "('" + self.email + "', '" + self.username + "', '" + self.password + "', '" + '1' + "', '" + '1' + "')"
+            cur.execute(query)
+            conn.commit()
+            conn.close()
+            return {"msg": "You have been successfully added"}
+
+        return {"msg": 'email is already available'}, 401
+
+
+
+    @staticmethod
+    def login(email, password):
         """Login registered users"""
 
         conn = psycopg2.connect(os.getenv('database'))
@@ -137,8 +160,8 @@ class Users(object):
 
         return {'token': token.decode('UTF-8')}
 
-
-    def get_a_user(self, email):
+    @staticmethod
+    def get_a_user(email):
         """Get a specific user"""
 
         conn = psycopg2.connect(os.getenv('database'))
@@ -155,7 +178,8 @@ class Users(object):
 
         return invalid_email()
 
-    def delete_user(self, email):
+    @staticmethod
+    def delete_user(email):
         "Delete a user"
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
@@ -191,7 +215,7 @@ class Users(object):
 
         return {"msg": 'username changed'}
 
-    def promote_user(self, email):
+    def promote_user(email):
         """Make a user an admin"""
         conn = psycopg2.connect(os.getenv('database'))
         cur = conn.cursor()
@@ -227,8 +251,7 @@ class Users(object):
 
         return {"msg": "password changed!"}
 
-    def __del__(self):
-        self.conn.close()
+
 
 
 def invalid_ride_id():

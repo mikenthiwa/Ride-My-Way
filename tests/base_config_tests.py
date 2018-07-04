@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import json
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app import create_app
-from app.models import create_tables
+from app.models import create_tables, Users
 
 
 
@@ -22,71 +22,33 @@ class ConfigTestCase(unittest.TestCase):
         self.cur = self.conn.cursor()
 
         with self.app.app_context():
-            # connect()
+
             create_tables()
 
             # Creating user
+            user_res = Users(username='test_user', email='test_user@gmail.com', password='123456789')
+            user_res.add_users()
 
-            hashed_password = generate_password_hash("123456789", method='sha256')
+            # create driver
+            driver_res = Users(username='test_driver', email='test_driver@gmail.com', password='123456789')
+            driver_res.add_driver()
 
-            query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
-                    "('test_user@gmail.com', 'test_user', '" + hashed_password + "', '" + '0' + "','" + '0' + "' )"
-            self.cur.execute(query)
-            self.conn.commit()
+            # create admin
+            admin_response = Users(username='admin', email='admin@admin.com', password='admin2018')
+            admin_response.add_admin()
 
-            # Creating driver
-            conn = psycopg2.connect(os.getenv('database'))
-            cur = conn.cursor()
-            hashed_password = generate_password_hash("123456789", method='sha256')
 
-            query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
-                    "('test_driver@gmail.com', 'test_driver', '" + hashed_password + "', '" + '1' + "','" + '0' + "' )"
-            cur.execute(query)
-            conn.commit()
-
-            # Creating Admin
-
-            conn = psycopg2.connect(os.getenv('database'))
-            cur = conn.cursor()
-            hashed_password = generate_password_hash("admin2018", method='sha256')
-
-            query = "INSERT INTO users (email, username, password, is_driver, is_admin) VALUES " \
-                    "('admin@admin.com', 'admin', '" + hashed_password + "', '" + '0' + "','" + '1' + "' )"
-            cur.execute(query)
-            conn.commit()
-
-            # Add ride
-            conn = psycopg2.connect(os.getenv('database'))
-            cur = conn.cursor()
-            route = 'Syo - Nai'
-            driver = 'James'
-            time = '10:00'
-            request = 'Request to join this ride'
-            query = "INSERT INTO rides (route, driver, time, request) VALUES " \
-                    "('" + route + "', '" + driver + "', '" + time + "', '" + request + "')"
-            cur.execute(query)
-            conn.commit()
-
-            # Add request
-
-            conn = psycopg2.connect(os.getenv('database'))
-            cur = conn.cursor()
-
-            query = "INSERT INTO request (username, pickup_point, time, accept) VALUES " \
-                    "('Teddy Kavoo', 'Vota', '8:00', 'you have joined this ride')"
-            cur.execute(query)
-            conn.commit()
 
             test_user_cred = {"email": "test_user@gmail.com", "password": "123456789"}
             test_driver_cred = {"email": "test_driver@gmail.com", "password": "123456789"}
             test_admin_cred = {"email": "admin@admin.com", "password": "admin2018"}
 
             # login user
-            user_response = self.client().post('/api/v3/login', data=json.dumps(test_user_cred),
+            user_response = self.client().post('/api/v3/auth/login', data=json.dumps(test_user_cred),
                                                content_type='application/json')
-            driver_response = self.client().post('/api/v3/login', data=json.dumps(test_driver_cred),
+            driver_response = self.client().post('/api/v3/auth/login', data=json.dumps(test_driver_cred),
                                                  content_type='application/json')
-            admin_response = self.client().post('/api/v3/login', data=json.dumps(test_admin_cred),
+            admin_response = self.client().post('/api/v3/auth/login', data=json.dumps(test_admin_cred),
                                                 content_type='application/json')
 
             # retrieve json
