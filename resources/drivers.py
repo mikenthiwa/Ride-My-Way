@@ -8,7 +8,6 @@ rides = Rides()
 
 api = Namespace("Driver",  description="Driver related operations")
 ride_model = api.model("Ride", {'route': fields.String,
-                                'driver': fields.String,
                                 'time': fields.String})
 
 
@@ -22,11 +21,10 @@ class DriverRide(Resource):
         """Add a ride endpoint"""
         parser = reqparse.RequestParser()
         parser.add_argument('route', type=str, required=True, help="Route is not provided", location=['json'])
-        parser.add_argument("driver", type=str, required=True, help="Driver name is not provided", location=['json'])
         parser.add_argument("time", type=str, required=True, help="Time is not provided", location=['json'])
 
         args = parser.parse_args()
-        res = rides.add_ride(route=args['route'], driver=args['driver'], time=args['time'])
+        res = rides.add_ride(route=args['route'], time=args['time'])
         return res, 201
 
 class ModifyRide(Resource):

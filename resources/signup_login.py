@@ -4,7 +4,6 @@ from flask_restplus import Namespace, Resource, fields, reqparse, inputs
 from app.models import Users
 
 
-user = Users()
 
 api = Namespace('SignUp and Login', description='Sign-up and Login')
 
@@ -33,6 +32,7 @@ class Register(Resource):
     @api.expect(model_register)
     def post(self):
         """Register user"""
+
         args = self.parser.parse_args(strict=True)
 
         username = args['username']
@@ -40,15 +40,16 @@ class Register(Resource):
         password = args['password']
         driver = args['is_driver']
 
+
+
         if username == "" or email == "" or password == "" or driver == "":
             return {"msg": "Field cannot be empty"}
 
         if driver == "True":
-            driver_res = user.add_driver(email=email, username=username, password=password)
-            return driver_res, 201
-
-        user_res = user.add_users(email=email, username=username, password=password)
-        return user_res, 201
+            driver_res = Users(username=username, email=email, password=password, is_driver=True)
+            return driver_res.add_driver()
+        user_res = Users(username=username, email=email, password=password)
+        return user_res.add_users(), 201
 
 
 
@@ -60,15 +61,16 @@ class Login(Resource):
 
     req_data.add_argument('password', required=True, help='password required', location=['json'])
 
+
     @api.expect(model_login)
     def post(self):
         """Login user"""
         args = self.req_data.parse_args(strict=True)
         email = args['email']
         password = args['password']
-        res = user.login(email=email, password=password)
+        res = Users.login(email=email, password=password)
         return res
 
 
-api.add_resource(Register, '/register', endpoint='register')
-api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(Register, '/auth/signup', endpoint='register')
+api.add_resource(Login, '/auth/login', endpoint='login')
